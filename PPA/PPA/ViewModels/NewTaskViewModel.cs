@@ -1,7 +1,9 @@
-﻿using PPA.Models;
+﻿using MvvmHelpers.Commands;
+using PPA.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace PPA.ViewModels
@@ -11,46 +13,35 @@ namespace PPA.ViewModels
         private string name;
         private string description;
 
+        public string Name { get => name; set => SetProperty(ref name, value); }
+        public string Description { get => description; set => SetProperty(ref description, value); }
+
+        public AsyncCommand SaveCommand { get; }
+        public AsyncCommand CancelCommand { get; }
+
         public NewTaskViewModel()
         {
-            SaveCommand = new Command(OnSave, ValidateSave);
-            CancelCommand = new Command(OnCancel);
-            this.PropertyChanged +=
-                (_, __) => SaveCommand.ChangeCanExecute();
+            SaveCommand = new AsyncCommand(OnSave);
+            CancelCommand = new AsyncCommand(OnCancel);
+          /*  this.PropertyChanged +=
+                (_, __) => SaveCommand.ChangeCanExecute(); */
         }
-
-        private bool ValidateSave()
-        {
-            return !String.IsNullOrWhiteSpace(name)
-                && !String.IsNullOrWhiteSpace(description);
-        }
-
-        public string Name
-        {
-            get => name;
-            set => SetProperty(ref name, value);
-        }
-
-        public string Description
-        {
-            get => description;
-            set => SetProperty(ref description, value);
-        }
-
-        public Command SaveCommand { get; }
-        public Command CancelCommand { get; }
-
-        private async void OnCancel()
+       async Task OnCancel()
         {
             // pop current page off navigation stack
             await Shell.Current.GoToAsync("..");
         }
 
-        private async void OnSave()
+        async Task OnSave()
         {
+            if (String.IsNullOrWhiteSpace(name)
+                && String.IsNullOrWhiteSpace(description))
+            {
+                return;
+            }
+
             TaskItem newTask = new TaskItem()
             {
-                Id = Guid.NewGuid().ToString(),
                 Name = Name,
                 Description = Description,
             };

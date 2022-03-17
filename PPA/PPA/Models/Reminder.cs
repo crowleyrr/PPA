@@ -4,9 +4,9 @@ using System.Text;
 
 namespace PPA.Models
 {
-    internal class Reminder
+    public class Reminder
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string ReminderName { get; set; }
         public DateTime ReminderTime { get; set; }
     }

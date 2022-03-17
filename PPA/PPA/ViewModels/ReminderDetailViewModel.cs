@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PPA.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -8,45 +9,22 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
-    [QueryProperty(nameof(ReminderId), nameof(ReminderId))]
+    [QueryProperty(nameof(ReminderName), nameof(ReminderName))]
     public class ReminderDetailViewModel : BaseViewModel
     {
         private string reminderId;
         private string name;
         private DateTime time;
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string ReminderName { get => name; set => SetProperty(ref name, value); }
+        public DateTime ReminderTime { get => time; set => SetProperty(ref time, value); }
 
-
-        public string ReminderName
-        {
-            get => name;
-            set => SetProperty(ref name, value);
-        }
-
-        public DateTime ReminderTime
-        {
-            get => time;
-            set => SetProperty(ref time, value);
-        }
-
-        public string ReminderId
-        {
-            get
-            {
-                return reminderId;
-            }
-            set
-            {
-                reminderId = value;
-                LoadReminderId(value);
-            }
-        }
-
-        public async void LoadReminderId(string reminderId)
+        IReminderDataStore ReminderService;
+        public async void LoadReminderId(int reminderId)
         {
             try
             {
-                var reminder = await DataStore.GetReminderAsync(reminderId);
+                var reminder = await ReminderService.GetReminderAsync(reminderId);
                 Id = reminder.Id;
                 ReminderName = reminder.ReminderName;
                 ReminderTime = reminder.ReminderTime;

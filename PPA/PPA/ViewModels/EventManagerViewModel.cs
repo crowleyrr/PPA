@@ -1,4 +1,80 @@
-﻿using PPA.Models;
+﻿using MvvmHelpers.Commands;
+using PPA.Models;
+using PPA.Services;
+using PPA.Views;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+
+namespace PPA.ViewModels
+{
+    public class EventManagerViewModel : BaseViewModel
+    {
+/*        private Event _selectedEvent; */
+        public ObservableCollection<Event> Events { get; set; }
+        public AsyncCommand LoadEventsCommand { get; }
+        public AsyncCommand AddEventCommand { get; }
+        public AsyncCommand<Event> EventTapped { get; }
+  
+
+        IEventDataStore EventService;
+
+        public EventManagerViewModel()
+        {
+            Events = new ObservableCollection<Event>();
+            LoadEventsCommand = new AsyncCommand(LoadEvents);
+            EventTapped = new AsyncCommand<Event>(OnEventSelected);
+            AddEventCommand = new AsyncCommand(OnAddEvent);
+        }
+
+        async Task LoadEvents()
+        {
+            IsBusy = true;
+            try
+            {
+                Events.Clear();
+                var events = await EventService.GetEventsAsync();
+                foreach (var ev in events)
+                {
+                    Events.Add(ev);
+                }
+            } catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        public void OnAppearing()
+        {
+            IsBusy = true;
+        }
+
+        private async Task OnAddEvent()
+        {
+            await Shell.Current.GoToAsync(nameof(NewEventPage));
+        }
+
+        async Task OnEventSelected(Event ev){
+            if (ev == null)
+                return;
+
+            await Shell.Current.GoToAsync($"{nameof(EventDetailPage)}?EventId={ev.Id}");
+        }
+    }
+}
+
+/*
+ * 
+ * using PPA.Models;
 using PPA.Views;
 using System;
 using System.Collections.Generic;
@@ -78,3 +154,4 @@ namespace PPA.ViewModels
         }
     }
 }
+*/

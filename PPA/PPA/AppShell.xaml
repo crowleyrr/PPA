@@ -31,8 +31,8 @@
 
     <TabBar>
         <ShellContent Title="Tasks" Icon="icon_about.png" Route="TaskManagerPage" ContentTemplate="{DataTemplate local:TaskManagerPage}" />
-        <ShellContent Title="Events" Icon="icon_about.png" Route="EventManagerPage" />
-        <ShellContent Title="Reminders" Icon="icon_about.png" Route="ReminderManagerPage" />
+        <ShellContent Title="Events" Icon="icon_about.png" Route="EventManagerPage" ContentTemplate="{DataTemplate local:EventManagerPage}" />
+        <ShellContent Title="Reminders" Icon="icon_about.png" Route="ReminderManagerPage" ContentTemplate="{DataTemplate local:ReminderManagerPage}"/>
 
     </TabBar>
 

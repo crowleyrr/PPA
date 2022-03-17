@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PPA.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -8,64 +9,31 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
-    [QueryProperty(nameof(EventId), nameof(EventId))]
+    [QueryProperty(nameof(EventName), nameof(EventName))]
     public class EventDetailViewModel : BaseViewModel
     {
-        private string eventId;
         private string eventName;
         private string eventLocation;
         private DateTime eventStartTime;
         private DateTime eventEndTime;
 
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string EventName{  get => eventName; set => SetProperty(ref eventName, value); }
+        public string EventLocation { get => eventLocation; set => SetProperty(ref eventLocation, value); }
+        public DateTime EventStartTime { get => eventStartTime; set => SetProperty(ref eventStartTime, value); }
+        public DateTime EventEndTime { get => eventEndTime; set => SetProperty(ref eventEndTime, value); }
+   
 
-        public string EventName
-        {
-            get => eventName;
-            set => SetProperty(ref eventName, value);  
-        }
-
-        public string EventLocation
-        {
-            get => eventLocation;
-            set => SetProperty(ref eventLocation, value);
-        }
-
-        public DateTime EventStartTime
-        {
-            get => eventStartTime;
-            set => SetProperty(ref eventStartTime, value);
-        }
-
-        public DateTime EventEndTime
-        {
-            get => eventEndTime;
-            set => SetProperty(ref eventEndTime, value);
-        }
-
-        public string EventId
-        {
-            get
-            {
-                return eventId;
-            }
-            set
-            {
-                eventId = value;
-                LoadEventId(value);
-            }
-        }
-
-        public async void LoadEventId(string eventId)
+        IEventDataStore EventService;
+        public async void LoadEventId(int eventId)
         {
             try
             {
-                var ev = await DataStore.GetEventAsync(eventId);
-                Id = ev.Id;
+                var ev = await EventService.GetEventAsync(eventId);
                 EventName = ev.EventName;
-                EventLocation = ev.Location;
-                EventStartTime = ev.StartTime;
-                EventEndTime = ev.EndTime;
+                EventLocation = ev.EventLocation;
+                EventStartTime = ev.EventStartTime;
+                EventEndTime = ev.EventEndTime;
             } catch (Exception)
             {
                 Debug.WriteLine("Failed to Load Event");

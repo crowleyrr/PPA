@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PPA.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -6,44 +7,22 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
-    [QueryProperty(nameof(TaskId), nameof(TaskId))]
+    [QueryProperty(nameof(Name), nameof(Name))]
     public class TaskDetailViewModel : BaseViewModel
     {
-        private string taskId;
         private string name;
         private string description;
-        public string Id { get; set; }
+        public int Id { get; set; }
 
-        public string Name
-        {
-            get => name;
-            set => SetProperty(ref name, value);
-        }
+        public string Name { get => name; set => SetProperty(ref name, value); }
+        public string Description { get => description; set => SetProperty(ref description, value); }
 
-        public string Description
-        {
-            get => description;
-            set => SetProperty(ref description, value);
-        }
-
-        public string TaskId
-        {
-            get
-            {
-                return taskId;
-            }
-            set
-            {
-                taskId = value;
-                LoadTaskId(value);
-            }
-        }
-
-        public async void LoadTaskId(string taskId)
+        ITaskDataStore TaskService;
+        public async void LoadTaskId(int taskId)
         {
             try
             {
-                var task = await DataStore.GetTaskAsync(taskId);
+                var task = await TaskService.GetTaskAsync(taskId);
                 Id = task.Id;
                 Name = task.Name;
                 Description = task.Description;

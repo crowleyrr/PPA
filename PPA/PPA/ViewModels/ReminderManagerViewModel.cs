@@ -1,41 +1,43 @@
-﻿using System;
+﻿using MvvmHelpers.Commands;
+using PPA.Models;
+using PPA.Services;
+using PPA.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using PPA.Models;
-using PPA.Views;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
     public class ReminderManagerViewModel : BaseViewModel
-    {
-        private Reminder _selectedReminder;
-        
+    {        
         public ObservableCollection<Reminder> Reminders { get; }
-        public Command LoadRemindersCommand { get; }
-        public Command AddReminderCommand { get;  }
-        public Command<Reminder> ReminderTapped { get; }
+        public AsyncCommand LoadRemindersCommand { get; }
+        public AsyncCommand AddReminderCommand { get;  }
+        public AsyncCommand<Reminder> ReminderTapped { get; }
 
+        IReminderDataStore ReminderService;
         public ReminderManagerViewModel()
         {
             Reminders = new ObservableCollection<Reminder>();
-            LoadRemindersCommand = new Command(async () => await ExecuteLoadRemindersCommand());
-            ReminderTapped = new Command<Reminder>(OnReminderSelected);
-            AddReminderCommand = new Command(OnAddReminder);
+            LoadRemindersCommand = new AsyncCommand(LoadReminders);
+            ReminderTapped = new AsyncCommand<Reminder>(OnReminderSelected);
+            AddReminderCommand = new AsyncCommand(OnAddReminder);
         }
 
-        async Reminder ExecuteLoadRemindersCommand()
+        async Task LoadReminders()
         {
             IsBusy = true;
 
             try
             {
                 Reminders.Clear();
-                var reminders = await DataStore.GetRemindersAsync(true);
-                foreach (var reminder in reminders)
+                var reminders = await ReminderService.GetRemindersAsync();
+                foreach(var reminder in reminders)
                 {
                     Reminders.Add(reminder);
                 }
@@ -47,35 +49,25 @@ namespace PPA.ViewModels
             {
                 IsBusy = false;
             }
+
         }
 
         public void OnAppearing()
         {
             IsBusy = true;
-            _selectedReminder = null;
         }
 
-        public Reminder SelectedReminder
-        {
-            get => _selectedReminder;
-            set
-            {
-                SetProperty(ref _selectedReminder, value);
-                OnReminderSelected(value);
-            }
-        }
-
-        private async void OnAddReminder(object obj)
+        private async Task OnAddReminder()
         {
             await Shell.Current.GoToAsync(nameof(NewReminderPage));
         }
 
-        async void OnReminderSelected(Reminder reminder)
+        async Task OnReminderSelected(Reminder reminder)
         {
             if (reminder == null)
                 return;
 
-            await Shell.Current.GoToAsync($"{nameof(ReminderDetailPage)}?{nameof(ReminderDetailViewModel.ReminderId)}={reminder.Id}")
+            await Shell.Current.GoToAsync($"{nameof(ReminderDetailPage)}?ReminderId={reminder.Id}");
         }
     }
 }
