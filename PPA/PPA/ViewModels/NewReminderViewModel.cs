@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
-    public class NewReminderViewModel : BaseViewModel
+    public class NewReminderViewModel : ViewModelBase
     {
         private string name;
         private DateTime time;
@@ -26,6 +26,7 @@ namespace PPA.ViewModels
         {
             SaveCommand = new AsyncCommand(OnSave);
             CancelCommand = new AsyncCommand(OnCancel);
+            ReminderService = DependencyService.Get<IReminderDataStore>();
            /* this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute(); */
         }

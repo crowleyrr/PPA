@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
-    public class TaskManagerViewModel: BaseViewModel
+    public class TaskManagerViewModel: ViewModelBase
     {
         public ObservableCollection<TaskItem> Tasks { get; }
         public AsyncCommand LoadTasksCommand { get; }

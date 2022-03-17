@@ -10,9 +10,8 @@ using Xamarin.Forms;
 namespace PPA.ViewModels
 {
     [QueryProperty(nameof(ReminderName), nameof(ReminderName))]
-    public class ReminderDetailViewModel : BaseViewModel
+    public class ReminderDetailViewModel : ViewModelBase
     {
-        private string reminderId;
         private string name;
         private DateTime time;
         public int Id { get; set; }

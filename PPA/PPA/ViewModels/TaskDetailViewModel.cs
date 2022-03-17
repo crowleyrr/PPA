@@ -8,7 +8,7 @@ using Xamarin.Forms;
 namespace PPA.ViewModels
 {
     [QueryProperty(nameof(Name), nameof(Name))]
-    public class TaskDetailViewModel : BaseViewModel
+    public class TaskDetailViewModel : ViewModelBase
     {
         private string name;
         private string description;

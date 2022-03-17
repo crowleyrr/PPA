@@ -13,7 +13,7 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
-    public class EventManagerViewModel : BaseViewModel
+    public class EventManagerViewModel : ViewModelBase
     {
 /*        private Event _selectedEvent; */
         public ObservableCollection<Event> Events { get; set; }

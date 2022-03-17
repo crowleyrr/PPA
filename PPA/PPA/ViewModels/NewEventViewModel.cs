@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
-    public class NewEventViewModel : BaseViewModel
+    public class NewEventViewModel : ViewModelBase
     {
         private string name;
         private string location;
@@ -30,6 +30,7 @@ namespace PPA.ViewModels
         {
             SaveCommand = new AsyncCommand(OnSave);
             CancelCommand = new AsyncCommand(OnCancel);
+            EventService = DependencyService.Get<IEventDataStore>();
             /*this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute(); */
         }

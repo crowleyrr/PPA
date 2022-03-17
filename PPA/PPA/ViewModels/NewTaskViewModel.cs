@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers.Commands;
 using PPA.Models;
+using PPA.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
-    public class NewTaskViewModel : BaseViewModel
+    public class NewTaskViewModel : ViewModelBase
     {
         private string name;
         private string description;
@@ -19,10 +20,13 @@ namespace PPA.ViewModels
         public AsyncCommand SaveCommand { get; }
         public AsyncCommand CancelCommand { get; }
 
+        ITaskDataStore TaskService;
         public NewTaskViewModel()
         {
             SaveCommand = new AsyncCommand(OnSave);
             CancelCommand = new AsyncCommand(OnCancel);
+            TaskService = DependencyService.Get<ITaskDataStore>();
+
           /*  this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute(); */
         }
@@ -46,7 +50,7 @@ namespace PPA.ViewModels
                 Description = Description,
             };
 
-            await DataStore.AddTaskAsync(newTask);
+            await TaskService.AddTaskAsync(newTask);
             await Shell.Current.GoToAsync("..");
 
 

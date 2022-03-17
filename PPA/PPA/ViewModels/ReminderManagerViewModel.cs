@@ -13,7 +13,7 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
-    public class ReminderManagerViewModel : BaseViewModel
+    public class ReminderManagerViewModel : ViewModelBase
     {        
         public ObservableCollection<Reminder> Reminders { get; }
         public AsyncCommand LoadRemindersCommand { get; }
