@@ -13,7 +13,7 @@ namespace PPA.Services
 
         async Task Init()
         {
-            if (db == null)
+            if (db != null)
                 return;
 
             var databasePath = Path.Combine(FileSystem.AppDataDirectory, "EventData.db");

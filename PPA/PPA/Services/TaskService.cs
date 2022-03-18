@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
+[assembly:Dependency(typeof(TaskService))]
 namespace PPA.Services
 {
-    public class TaskService : ITaskDataStore
+    public class TaskService: ITaskDataStore
     {
         SQLiteAsyncConnection db;
 
         async Task Init()
         {
-            if (db == null)
+            if (db != null)
                 return;
 
             var databasePath = Path.Combine(FileSystem.AppDataDirectory, "TaskData.db");

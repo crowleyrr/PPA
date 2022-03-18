@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers.Commands;
+using MvvmHelpers;
 using PPA.Models;
 using PPA.Services;
 using PPA.Views;
@@ -9,24 +10,31 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Command = MvvmHelpers.Commands.Command;
 
 namespace PPA.ViewModels
 {
     public class TaskManagerViewModel: ViewModelBase
     {
         public ObservableCollection<TaskItem> Tasks { get; }
-        public AsyncCommand LoadTasksCommand { get; }
+        public AsyncCommand LoadTasksCommand { get; } 
         public AsyncCommand AddTaskCommand  { get; }
         public AsyncCommand<TaskItem> TaskTapped { get; }
+        public AsyncCommand<TaskItem> DeleteTaskCommand { get; }
 
 
         ITaskDataStore TaskService;
         public TaskManagerViewModel()
         {
+            Title = "Task Manager";
             Tasks = new ObservableCollection<TaskItem>();
-            LoadTasksCommand = new AsyncCommand(LoadTasks);
+            LoadTasksCommand = new AsyncCommand(LoadTasks); 
             TaskTapped = new AsyncCommand<TaskItem>(OnTaskSelected);
             AddTaskCommand = new AsyncCommand(OnAddTask);
+            DeleteTaskCommand = new AsyncCommand<TaskItem>(OnDeleteTask);
+
+            TaskService = DependencyService.Get<ITaskDataStore>();
+
 
         }
 
@@ -34,32 +42,29 @@ namespace PPA.ViewModels
         {
             IsBusy = true;
 
-            try
+#if DEBUG
+            await Task.Delay(500);
+#endif 
+            Tasks.Clear();
+            var tasks = await TaskService.GetTasksAsync();
+            foreach (var task in tasks)
             {
-                Tasks.Clear();
-                var tasks = await TaskService.GetTasksAsync();
-                foreach (var task in tasks)
-                {
-                    Tasks.Add(task);
-                }
-            } catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
+                Tasks.Add(task);
             }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
 
-        public void OnAppearing()
-        {
-            IsBusy = true;
-        }
+            IsBusy = false;
+        } 
+
 
         private async Task OnAddTask()
         {
             await Shell.Current.GoToAsync(nameof(NewTaskPage));
+        }
+
+        private async Task OnDeleteTask(TaskItem task)
+        {
+            await TaskService.DeleteTaskAsync(task.Id);
+            await LoadTasks();
         }
 
         async Task OnTaskSelected(TaskItem task)
@@ -69,6 +74,11 @@ namespace PPA.ViewModels
 
             await Shell.Current.GoToAsync($"{nameof(TaskDetailPage)}?TaskId={task.Id}");
             
+        }
+
+        public void OnAppearing()
+        {
+            IsBusy = true;
         }
 
     }

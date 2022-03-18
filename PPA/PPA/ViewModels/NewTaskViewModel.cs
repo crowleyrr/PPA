@@ -20,12 +20,12 @@ namespace PPA.ViewModels
         public AsyncCommand SaveCommand { get; }
         public AsyncCommand CancelCommand { get; }
 
-        ITaskDataStore TaskService;
+        ITaskDataStore TaskService; 
         public NewTaskViewModel()
         {
             SaveCommand = new AsyncCommand(OnSave);
             CancelCommand = new AsyncCommand(OnCancel);
-            TaskService = DependencyService.Get<ITaskDataStore>();
+            TaskService = DependencyService.Get<ITaskDataStore>(); 
 
           /*  this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute(); */
@@ -48,6 +48,7 @@ namespace PPA.ViewModels
             {
                 Name = Name,
                 Description = Description,
+                Today = true,
             };
 
             await TaskService.AddTaskAsync(newTask);

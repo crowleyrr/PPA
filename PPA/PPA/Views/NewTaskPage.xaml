@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodel="clr-namespace:PPA.ViewModels"
              x:Class="PPA.Views.NewTaskPage"
-             Shell.PresentationMode="ModalAnimated"
              Title="New Task"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:viewmodels="clr-namespace:PPA.ViewModels" x:DataType="viewmodels:NewTaskViewModel"
-             ios:Page.UseSafeArea="true">
+            x:DataType="viewmodel:NewTaskViewModel"
+             Shell.PresentationMode="Modal">
+    <ContentPage.BindingContext>
+        <viewmodel:NewTaskViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="15">
             <Label Text="Name" FontSize="Medium" />

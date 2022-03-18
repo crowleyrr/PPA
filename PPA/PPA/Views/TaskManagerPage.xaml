@@ -15,7 +15,8 @@
     <RefreshView x:DataType="local:TaskManagerViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <CollectionView x:Name="TasksListView"
                 ItemsSource="{Binding Tasks}"
-                SelectionMode="None">
+                SelectionMode="None"
+                        >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10" x:DataType="model:TaskItem">
@@ -27,6 +28,7 @@
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDetailTextStyle}"
                             FontSize="13" />
+                            
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
@@ -38,7 +40,8 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </RefreshView>
+
+        </RefreshView>
         <Label Text="Tomorrow"
                FontSize="30"
                Padding="10"></Label>

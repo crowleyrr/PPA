@@ -11,13 +11,12 @@ using Xamarin.Forms.Xaml;
 
 namespace PPA.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewTaskPage : ContentPage
     {
-        public TaskItem Task { get; set; }
         public NewTaskPage()
         {
             InitializeComponent();
-            BindingContext = new NewTaskViewModel();
         }
     }
 }
