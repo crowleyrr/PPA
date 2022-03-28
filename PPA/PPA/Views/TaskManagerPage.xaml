@@ -8,72 +8,144 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddTaskCommand}" />
     </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="DoneButton" TargetType="Button">
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="BorderWidth" Value="10" />
+                <Setter Property="BorderRadius" Value="2" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="Blue" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <StackLayout>
         <Label Text="Today"
                FontSize="30"
                Padding="10"></Label>
-    <RefreshView x:DataType="local:TaskManagerViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="TasksListView"
+        <BoxView HeightRequest="1.5" Color="Gray"/>
+
+        <RefreshView x:DataType="local:TaskManagerViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView x:Name="TasksListView"
                 ItemsSource="{Binding Tasks}"
                 SelectionMode="None"
                         >
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:TaskItem">
-                        <Label Text="{Binding Name}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                        <Label Text="{Binding Description}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />
-                            
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer 
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Grid ColumnDefinitions="*,Auto" x:DataType="model:TaskItem">
+                                <Label Grid.Row="0" Text="{Binding Name}"
+                                VerticalOptions="Center" 
+                                HorizontalOptions="StartAndExpand"
+                                FontSize="20"
+                                Padding="10,0,0,0"
+                             />
+                                <Label Grid.Row="1" Text="{Binding Description}"
+                                VerticalOptions="Center" 
+                                HorizontalOptions="StartAndExpand"
+                                FontSize="15"
+                                Padding="30,0,0,10"
+                             />
+                                <Button Grid.Row="0" Grid.Column="1" Text="Tomorrow"/>
+                                <Button Grid.Row="1" Grid.Column="1" Text="Done" Style="{StaticResource DoneButton}"></Button>
+
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=TaskTapped}"		
                                 CommandParameter="{Binding .}">
-                            </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                                    </TapGestureRecognizer>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                            <BoxView HeightRequest="0.5" Color="Gray"/>
+
+                        </StackLayout>
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
 
         </RefreshView>
         <Label Text="Tomorrow"
                FontSize="30"
                Padding="10"></Label>
+        <BoxView HeightRequest="1" Color="Gray"/>
+
         <RefreshView x:DataType="local:TaskManagerViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <CollectionView x:Name="TomorrowTasksListView"
                 ItemsSource="{Binding Tasks}"
                 SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10" x:DataType="model:TaskItem">
-                            <Label Text="{Binding Name}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                            <Label Text="{Binding Description}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer 
+                        <StackLayout>
+                            <Grid ColumnDefinitions="*,Auto" x:DataType="model:TaskItem">
+                                <Label Grid.Row="0" Text="{Binding Name}"
+                                VerticalOptions="Center" 
+                                HorizontalOptions="StartAndExpand"
+                                FontSize="20"
+                                Padding="10,0,0,0"
+                             />
+                                <Label Grid.Row="1" Text="{Binding Description}"
+                                VerticalOptions="Center" 
+                                HorizontalOptions="StartAndExpand"
+                                FontSize="15"
+                                Padding="30,0,0,10"
+                             />
+                                <Button Grid.Row="0" 
+                                    Grid.Column="1" 
+                                    Text="Done" 
+                                    Style="{StaticResource DoneButton}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=DeleteTaskCommand}"		
+                                    CommandParameter="{Binding .}"></Button>
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=TaskTapped}"		
                                 CommandParameter="{Binding .}">
-                                </TapGestureRecognizer>
-                            </StackLayout.GestureRecognizers>
+                                    </TapGestureRecognizer>
+                                </Grid.GestureRecognizers>
+
+
+                            </Grid>
                         </StackLayout>
+
+
+                        <!-- <StackLayout Padding="10" x:DataType="model:TaskItem">
+                                <Label Text="{Binding Name}" 
+                            LineBreakMode="NoWrap" 
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="16"
+                                       />
+                                <Label Text="{Binding Description}" 
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemDetailTextStyle}"
+                            FontSize="13" 
+                                       />
+
+                            <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=TaskTapped}"		
+                                CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+
+                        </StackLayout> -->
                     </DataTemplate>
+
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
     </StackLayout>
     <!--ContentPage.Content>
+ 
+    
+                               
+
+
         <StackLayout Orientation="Vertical">
             <Button x:Name="ButtonAdd" Text="Add +" />
             <Label Text="Today:"
