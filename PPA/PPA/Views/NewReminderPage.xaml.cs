@@ -11,13 +11,13 @@ using Xamarin.Forms.Xaml;
 
 namespace PPA.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+
     public partial class NewReminderPage : ContentPage
     {
-        public Reminder Reminder { get; set; }
         public NewReminderPage()
         {
             InitializeComponent();
-            BindingContext = new NewReminderViewModel();
         }
     }
 }

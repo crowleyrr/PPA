@@ -27,28 +27,21 @@ namespace PPA.ViewModels
             LoadRemindersCommand = new AsyncCommand(LoadReminders);
             ReminderTapped = new AsyncCommand<Reminder>(OnReminderSelected);
             AddReminderCommand = new AsyncCommand(OnAddReminder);
+            ReminderService = DependencyService.Get<IReminderDataStore>();
         }
 
         async Task LoadReminders()
         {
             IsBusy = true;
-
-            try
-            {
-                Reminders.Clear();
+              Reminders.Clear();
                 var reminders = await ReminderService.GetRemindersAsync();
                 foreach(var reminder in reminders)
                 {
                     Reminders.Add(reminder);
                 }
-            } catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
+           
+          
                 IsBusy = false;
-            }
 
         }
 

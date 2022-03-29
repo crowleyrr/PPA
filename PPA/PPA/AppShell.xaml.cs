@@ -11,6 +11,8 @@ namespace PPA
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(NewTaskPage), typeof(NewTaskPage));
+            Routing.RegisterRoute(nameof(NewReminderPage), typeof(NewReminderPage));
+
         }
 
     }

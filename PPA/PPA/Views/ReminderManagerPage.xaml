@@ -1,16 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:PPA.ViewModels" xmlns:model="clr-namespace:PPA.Models" x:DataType="local:ReminderManagerViewModel"
              x:Class="PPA.Views.ReminderManagerPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Command="{Binding AddTaskCommand}" />
+        <ToolbarItem Text="Add" Command="{Binding AddReminderCommand}" />
     </ContentPage.ToolbarItems>
-    
+    <StackLayout>
+        <Label Text="Upcoming Reminders"
+               FontSize="30"
+               Padding="10"></Label>
+        <BoxView HeightRequest="1.5" Color="Gray"/>
+
+        <RefreshView x:DataType="local:ReminderManagerViewModel" Command="{Binding LoadRemindersCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView x:Name="RemindersListView"
+                ItemsSource="{Binding Reminders}"
+                SelectionMode="None"
+                        >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Grid ColumnDefinitions="*,Auto" x:DataType="model:Reminder">
+                                <Label Grid.Row="0" Text="{Binding ReminderName}"
+                                VerticalOptions="Center" 
+                                HorizontalOptions="StartAndExpand"
+                                FontSize="20"
+                                Padding="10,0,0,0"
+                             />
+                                <Label Grid.Row="1" Text="{Binding ReminderTime}"
+                                VerticalOptions="Center" 
+                                HorizontalOptions="StartAndExpand"
+                                FontSize="15"
+                                Padding="30,0,0,10"
+                             />
+                                <Button Grid.Row="0" Grid.Column="1" Text="Snooze"/>
+                                <Button Grid.Row="1" Grid.Column="1" Text="Done" Style="{StaticResource DoneButton}"></Button>
+
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ReminderManagerViewModel}}, Path=ReminderTapped}"		
+                                CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                            <BoxView HeightRequest="0.5" Color="Gray"/>
+
+                        </StackLayout>
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </RefreshView>
+    </StackLayout>
+    <!--
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>
-    </ContentPage.Content>
+    </ContentPage.Content> -->
 </ContentPage>

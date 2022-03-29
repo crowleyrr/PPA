@@ -1,14 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:PPA.ViewModels" x:DataType="viewmodels:NewReminderViewModel"
              x:Class="PPA.Views.NewReminderPage"
              Shell.PresentationMode="ModalAnimated"
              Title="New Reminder">
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="15">
-            <Label Text="Name" FontSize="Medium" />
+            <Label Text="Reminder" FontSize="Medium" />
             <Entry Text="{Binding ReminderName, Mode=TwoWay}" FontSize="Medium" />
-            <Label Text="Description" FontSize="Medium" />
+            <Label Text="Remind at" FontSize="Medium" />
+            <DatePicker x:Name="reminderDatePicker"
+                    Format="D"
+                    Margin="30, 0, 0, 30" />
             <Editor Text="{Binding ReminderTime, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>

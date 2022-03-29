@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
+[assembly: Dependency(typeof(ReminderService))]
+
 namespace PPA.Services
 {
     public class ReminderService : IReminderDataStore
