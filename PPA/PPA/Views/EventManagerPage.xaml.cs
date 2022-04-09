@@ -14,17 +14,15 @@ namespace PPA.Views
 {
     public partial class EventManagerPage : ContentPage
     {
-        EventManagerViewModel _viewModel;
         public EventManagerPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new EventManagerViewModel();
+            BindingContext = new EventManagerViewModel();
         }
 
-        protected override void OnAppearing()
+        private void Cal_DateSelectionChanged(object sender, EventArgs arg)
         {
-            base.OnAppearing();
-            _viewModel.OnAppearing();
+            DisplayAlert("Date Changed", calendar.SelectedDates.ToString(), "OK");
         }
     }
 }

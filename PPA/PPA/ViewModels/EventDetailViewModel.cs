@@ -9,9 +9,11 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
-    [QueryProperty(nameof(EventName), nameof(EventName))]
+   /* [QueryProperty(nameof(EventName), nameof(EventName))] */
     public class EventDetailViewModel : ViewModelBase
     {
+        /*
+
         private string eventName;
         private string eventLocation;
         private DateTime eventStartTime;

@@ -12,6 +12,7 @@ namespace PPA.ViewModels
 {
     public class NewEventViewModel : ViewModelBase
     {
+       /*
         private string name;
         private string location;
         private DateTime startTime;
@@ -32,7 +33,7 @@ namespace PPA.ViewModels
             CancelCommand = new AsyncCommand(OnCancel);
             EventService = DependencyService.Get<IEventDataStore>();
             /*this.PropertyChanged +=
-                (_, __) => SaveCommand.ChangeCanExecute(); */
+                (_, __) => SaveCommand.ChangeCanExecute(); 
         }
 
         async Task OnSave()
@@ -63,7 +64,7 @@ namespace PPA.ViewModels
 
         }
 
-
+    */
 
     }
 }

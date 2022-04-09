@@ -1,12 +1,182 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PPA.Views.EventManagerPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms! (Events)"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+<ContentPage x:Class="PPA.Views.EventManagerPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Converters="clr-namespace:PPA.Converters"
+    xmlns:Models="clr-namespace:PPA.Models"
+    xmlns:ViewModels="clr-namespace:PPA.ViewModels"
+    xmlns:xc="clr-namespace:XCalendar;assembly=XCalendar"
+    xmlns:xcConverters="clr-namespace:XCalendar.Converters;assembly=XCalendar"
+    xmlns:xcModels="clr-namespace:XCalendar.Models;assembly=XCalendar"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:Name="This"
+    Title="Event Calendar"
+    x:DataType="{x:Type ViewModels:EventManagerViewModel}"
+    xct:SafeAreaEffect.SafeArea="True"
+             >
+
+    <StackLayout>
+        <xc:CalendarView x:Name="calendar" DateSelectionChanged="Cal_DateSelectionChanged" SelectionType="Single" />
+    </StackLayout>
+    <!--
+    
+    <Grid
+        ColumnSpacing="0"
+        RowDefinitions="Auto,*"
+        RowSpacing="0">
+
+        <Frame
+            Margin="10"
+            Padding="0"
+            BackgroundColor="{StaticResource ContentBackgroundColor}"
+            CornerRadius="15">
+
+            <xc:CalendarView
+                x:Name="MainCalendarView"
+                Grid.Row="0"
+                DayNameTextColor="{StaticResource ContentTextColor}"
+                NavigationArrowColor="{StaticResource ContentTextColor}"
+                NavigationBackgroundColor="Transparent"
+                NavigationTextColor="{StaticResource ContentTextColor}"
+                SelectedDates="{Binding SelectedDates}"
+                SelectionAction="Modify"
+                SelectionType="Single">
+
+                <xc:CalendarView.DayTemplate>
+                    <DataTemplate x:DataType="{x:Type xcModels:CalendarDay}">
+                        <ContentView>
+                            <xc:CalendarDayView
+                                Margin="2.5"
+                                HeightRequest="43"
+                                CalendarView="{Binding ., Source={x:Reference MainCalendarView}}"
+                                CurrentMonthTextColor="{StaticResource CalendarBackgroundTextColor}"
+                                DateTime="{Binding DateTime}"
+                                OutOfRangeTextColor="{StaticResource CalendarTertiaryColor}"
+                                SelectedTextColor="{StaticResource CalendarPrimaryTextColor}"
+                                TodayBorderColor="{StaticResource CalendarPrimaryColor}"
+                                TodayTextColor="{StaticResource CalendarBackgroundTextColor}">
+
+                             
+                                <xc:CalendarDayView.ControlTemplate>
+                                    <ControlTemplate>
+                                        <Grid RowSpacing="2">
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1.5*"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+                                            <ContentPresenter
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                VerticalOptions="Center"/>
+
+                                            <StackLayout
+                                                Grid.Row="1"
+                                                HorizontalOptions="Center"
+                                                Orientation="Horizontal"
+                                                Spacing="2.5">
+
+                                                <StackLayout.IsVisible>
+                                                    <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                                                        <Binding Path="IsCurrentMonth" Source="{RelativeSource TemplatedParent}"/>
+                                                        <Binding
+                                                            Converter="{StaticResource InvertedBoolConverter}"
+                                                            Path="IsOutOfRange"
+                                                            Source="{RelativeSource TemplatedParent}"/>
+                                                    </MultiBinding>
+                                                </StackLayout.IsVisible>
+
+                                                <BindableLayout.ItemsSource>
+                                                    <Binding Path="DateTime.Date" Source="{RelativeSource TemplatedParent}">
+                                                        <Binding.Converter>
+                                                            <Converters:EventWhereConverter
+                                                                Items="{Binding BindingContext.Events, Source={x:Reference This}}"
+                                                                UseTimeComponent="False"
+                                                                WhiteList="True"/>
+                                                        </Binding.Converter>
+                                                    </Binding>
+                                                </BindableLayout.ItemsSource> 
+
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate x:DataType="{x:Type Models:Event}">
+                                                        <BoxView
+                                                            CornerRadius="100"
+                                                            HeightRequest="7"
+                                                            HorizontalOptions="CenterAndExpand"
+                                                            VerticalOptions="Center"
+                                                            WidthRequest="7"
+                                                            Color="{Binding Color}"/>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+
+                                            </StackLayout>
+
+                                        </Grid>
+                                    </ControlTemplate>
+                                </xc:CalendarDayView.ControlTemplate>
+
+                            </xc:CalendarDayView>
+                        </ContentView>
+                    </DataTemplate>
+                </xc:CalendarView.DayTemplate>
+
+            </xc:CalendarView>
+
+        </Frame>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding SelectedEvents}">
+
+            <CollectionView.EmptyView>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
+                    Text="No Events"
+                    TextColor="{StaticResource ContentTextColor}"
+                    VerticalTextAlignment="Center"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="0" Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type Models:Event}">
+                    <ContentView Padding="5">
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="{StaticResource ContentBackgroundColor}"
+                            CornerRadius="10">
+                            <StackLayout Orientation="Horizontal" Spacing="0">
+                                <BoxView BackgroundColor="{Binding Color}" WidthRequest="20"/>
+
+                                <StackLayout Padding="10" Spacing="0">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="20"
+                                        Text="{Binding DateTime, StringFormat='{0: dd MMMM HH:mm}'}"
+                                        TextColor="{StaticResource ContentTextColor}"
+                                        VerticalTextAlignment="Center"/>
+                                    <Label
+                                        FontSize="16"
+                                        Text="{Binding Title}"
+                                        TextColor="{StaticResource ContentTextColor}"
+                                        Margin="5,0,0,0"/>
+                                    <Label
+                                        Margin="5,10,0,0"
+                                        FontSize="14"
+                                        Text="{Binding Description}"
+                                        TextColor="{StaticResource ContentTextColor}"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+    
+    -->
+
 </ContentPage>

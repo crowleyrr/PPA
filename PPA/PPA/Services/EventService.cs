@@ -7,8 +7,12 @@ using Xamarin.Essentials;
 
 namespace PPA.Services
 {
-    public class EventService : IEventDataStore
+    public class EventService 
     {
+        /*
+
+        : IEventDataStore
+
         SQLiteAsyncConnection db;
 
         async Task Init()
@@ -34,7 +38,7 @@ namespace PPA.Services
         {
            
         }
-         */
+         
         public async Task DeleteEventAsync(int id)
         {
             await Init();
@@ -56,6 +60,7 @@ namespace PPA.Services
 
             return ev;
         }
+        */
     }
 }
 

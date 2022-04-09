@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Forms;
 
 namespace PPA.Models
 {
     public class Event
     {
-        public int Id { get; set; }
-        public string EventName { get; set; }
-        public string EventLocation { get; set; }
-        public DateTime EventStartTime { get; set; }
-        public DateTime EventEndTime { get; set; }
-
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public DateTime DateTime { get; set; } = DateTime.Today;
+        public Color Color { get; set; }
     }
 }
