@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace PPA.Converters
 {
-    public class EventWhereConverter : BindableObject
+    public class EventWhereConverter : BindableObject, IValueConverter
     {
         public IEnumerable<Event> Items
         {

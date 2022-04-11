@@ -1,28 +1,23 @@
 ﻿using PPA.ViewModels;
-using PPA.Models;
-using PPA.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PPA.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+
     public partial class EventManagerPage : ContentPage
     {
         public EventManagerPage()
         {
+            try { 
             InitializeComponent();
             BindingContext = new EventManagerViewModel();
-        }
+            } catch(System.Exception ex)
+            {
 
-        private void Cal_DateSelectionChanged(object sender, EventArgs arg)
-        {
-            DisplayAlert("Date Changed", calendar.SelectedDates.ToString(), "OK");
+                DisplayAlert("Alert", ex.ToString(), "OK");
+            }
         }
     }
 }
