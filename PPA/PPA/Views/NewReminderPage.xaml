@@ -12,7 +12,6 @@
             <DatePicker x:Name="reminderDatePicker"
                     Format="D"
                     Margin="30, 0, 0, 30" />
-            <Editor Text="{Binding ReminderTime, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>

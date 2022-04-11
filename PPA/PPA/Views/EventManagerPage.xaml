@@ -21,7 +21,9 @@
         <!--  Inverts a binded boolean value  -->
         <xct:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
     </ContentPage.Resources>
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" />
+    </ContentPage.ToolbarItems>
 
     <Grid
         ColumnSpacing="0"
