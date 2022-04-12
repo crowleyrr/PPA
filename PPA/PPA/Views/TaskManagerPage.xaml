@@ -42,10 +42,19 @@
                              />
                               
                                 <Button Grid.Row="0" Grid.Column="1" Text="Tomorrow"/>
-                                <Button Grid.Row="0" Grid.Column="2" Text="Done" Style="{StaticResource DoneButton}"></Button>
+                                <Button Grid.Row="0" Grid.Column="2" Text="Done"
+                                        Style="{StaticResource DoneButton}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=DeleteTaskCommand}"		
+                                CommandParameter="{Binding .}"></Button>
 
                             </Grid>
                             <Label Grid.Row="1" Text="{Binding Description}"
+                                VerticalOptions="Center" 
+                                HorizontalOptions="StartAndExpand"
+                                FontSize="15"
+                                Padding="30,0,0,10"
+                             />
+                            <Label Grid.Row="2" Text="{Binding Id}"
                                 VerticalOptions="Center" 
                                 HorizontalOptions="StartAndExpand"
                                 FontSize="15"

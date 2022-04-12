@@ -1,10 +1,13 @@
-﻿using System;
+﻿using SQLite;
+using System;
 
 namespace PPA.Models
 {
     public class TaskItem
     {
-        public int Id { get; set; }
+    
+        [PrimaryKey]
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public Boolean Today { get; set; }

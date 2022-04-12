@@ -12,13 +12,14 @@ namespace PPA.ViewModels
     {
         private string name;
         private string description;
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get => name; set => SetProperty(ref name, value); }
         public string Description { get => description; set => SetProperty(ref description, value); }
 
+
         ITaskDataStore TaskService;
-        public async void LoadTaskId(int taskId)
+        public async void LoadTaskId(Guid taskId)
         {
             try
             {

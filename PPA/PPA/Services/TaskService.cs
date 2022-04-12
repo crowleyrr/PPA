@@ -30,6 +30,7 @@ namespace PPA.Services
         public async Task AddTaskAsync(TaskItem task)
         {
             await Init();
+            task.Id = Guid.NewGuid();
             var id = await db.InsertAsync(task);
         }
 
@@ -40,7 +41,7 @@ namespace PPA.Services
         }
         */
 
-        public async Task DeleteTaskAsync(int id)
+        public async Task DeleteTaskAsync(Guid id)
         {
             await Init();
             await db.DeleteAsync<TaskItem>(id);
@@ -54,7 +55,7 @@ namespace PPA.Services
             return tasks;
         }
 
-        public async Task<TaskItem> GetTaskAsync(int id)
+        public async Task<TaskItem> GetTaskAsync(Guid id)
         {
             await Init();
             var task = await db.Table<TaskItem>().FirstOrDefaultAsync(c => c.Id == id);
