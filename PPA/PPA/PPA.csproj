@@ -6,7 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\TomorrowTaskItem.cs" />
     <Compile Remove="Services\IDataStore.cs" />
+    <Compile Remove="Services\ITomorrowTaskDataStore.cs" />
+    <Compile Remove="Services\TomorrowTaskService.cs" />
+    <Compile Remove="ViewModels\TomorrowTaskViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,21 +17,25 @@ namespace PPA.ViewModels
     public class TaskManagerViewModel: ViewModelBase
     {
         public ObservableCollection<TaskItem> Tasks { get; }
+        public ObservableCollection<TaskItem> TomorrowTasks { get; }
         public AsyncCommand LoadTasksCommand { get; } 
         public AsyncCommand AddTaskCommand  { get; }
         public AsyncCommand<TaskItem> TaskTapped { get; }
         public AsyncCommand<TaskItem> DeleteTaskCommand { get; }
 
+        public AsyncCommand<TaskItem> TomorrowTaskCommand { get; }
 
         ITaskDataStore TaskService;
         public TaskManagerViewModel()
         {
             Title = "Task Manager";
+            TomorrowTasks = new ObservableCollection<TaskItem>();
             Tasks = new ObservableCollection<TaskItem>();
             LoadTasksCommand = new AsyncCommand(LoadTasks); 
             TaskTapped = new AsyncCommand<TaskItem>(OnTaskSelected);
             AddTaskCommand = new AsyncCommand(OnAddTask);
             DeleteTaskCommand = new AsyncCommand<TaskItem>(OnDeleteTask);
+            TomorrowTaskCommand = new AsyncCommand<TaskItem>(MoveToTomorrow);
 
             TaskService = DependencyService.Get<ITaskDataStore>();
 
@@ -46,10 +50,20 @@ namespace PPA.ViewModels
             await Task.Delay(500);
 #endif 
             Tasks.Clear();
+            TomorrowTasks.Clear();
             var tasks = await TaskService.GetTasksAsync();
             foreach (var task in tasks)
             {
-                Tasks.Add(task);
+
+                if (task.Today && !Tasks.Contains(task))
+                {
+                    Tasks.Add(task);
+                }
+                else if (!TomorrowTasks.Contains(task))
+                {
+
+                    TomorrowTasks.Add(task);    
+                }
             }
 
             IsBusy = false;
@@ -65,6 +79,22 @@ namespace PPA.ViewModels
         {
             await TaskService.DeleteTaskAsync(task.Id);
             await LoadTasks();
+        }
+
+        private async Task MoveToTomorrow(TaskItem task)
+        {
+            
+            TaskItem newTask = new TaskItem()
+            {
+                Name = task.Name,
+                Description = task.Description,
+                Today = false,
+            };
+
+            await TaskService.AddTaskAsync(newTask);
+            await OnDeleteTask(task);
+            await LoadTasks();
+            
         }
 
         async Task OnTaskSelected(TaskItem task)

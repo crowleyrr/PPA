@@ -41,7 +41,10 @@
                                 Padding="10,0,0,0"
                              />
                               
-                                <Button Grid.Row="0" Grid.Column="1" Text="Tomorrow"/>
+                                <Button Grid.Row="0" Grid.Column="1" Text="Tomorrow"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=TomorrowTaskCommand}"		
+                                CommandParameter="{Binding .}"
+                                        />
                                 <Button Grid.Row="0" Grid.Column="2" Text="Done"
                                         Style="{StaticResource DoneButton}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=DeleteTaskCommand}"		
@@ -49,12 +52,6 @@
 
                             </Grid>
                             <Label Grid.Row="1" Text="{Binding Description}"
-                                VerticalOptions="Center" 
-                                HorizontalOptions="StartAndExpand"
-                                FontSize="15"
-                                Padding="30,0,0,10"
-                             />
-                            <Label Grid.Row="2" Text="{Binding Id}"
                                 VerticalOptions="Center" 
                                 HorizontalOptions="StartAndExpand"
                                 FontSize="15"
@@ -75,6 +72,12 @@
                     </DataTemplate>
 
                 </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No tasks for today."
+                           FontSize="25"
+                           Padding="80,40,10,10"
+                           ></Label>
+                </CollectionView.EmptyView>
             </CollectionView>
 
 
@@ -86,7 +89,7 @@
 
         <RefreshView x:DataType="local:TaskManagerViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <CollectionView x:Name="TomorrowTasksListView"
-                ItemsSource="{Binding Tasks}"
+                ItemsSource="{Binding TomorrowTasks}"
                 SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -148,6 +151,12 @@
                     </DataTemplate>
 
                 </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No tasks for tomorrow."
+                           FontSize="25"
+                           Padding="70,40,10,10"
+                           ></Label>
+                </CollectionView.EmptyView>
             </CollectionView>
         </RefreshView>
     </StackLayout>
