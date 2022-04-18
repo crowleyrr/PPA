@@ -59,15 +59,7 @@
                              />
                             <BoxView HeightRequest="0.5" Color="Gray"/>
 
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=TaskTapped}"		
-                                CommandParameter="{Binding .}">
-                                </TapGestureRecognizer>
-                            </StackLayout.GestureRecognizers>
 
-                            
                         </StackLayout>
                     </DataTemplate>
 

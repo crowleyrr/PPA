@@ -20,7 +20,6 @@ namespace PPA.ViewModels
         public ObservableCollection<TaskItem> TomorrowTasks { get; }
         public AsyncCommand LoadTasksCommand { get; } 
         public AsyncCommand AddTaskCommand  { get; }
-        public AsyncCommand<TaskItem> TaskTapped { get; }
         public AsyncCommand<TaskItem> DeleteTaskCommand { get; }
 
         public AsyncCommand<TaskItem> TomorrowTaskCommand { get; }
@@ -32,7 +31,6 @@ namespace PPA.ViewModels
             TomorrowTasks = new ObservableCollection<TaskItem>();
             Tasks = new ObservableCollection<TaskItem>();
             LoadTasksCommand = new AsyncCommand(LoadTasks); 
-            TaskTapped = new AsyncCommand<TaskItem>(OnTaskSelected);
             AddTaskCommand = new AsyncCommand(OnAddTask);
             DeleteTaskCommand = new AsyncCommand<TaskItem>(OnDeleteTask);
             TomorrowTaskCommand = new AsyncCommand<TaskItem>(MoveToTomorrow);
@@ -94,15 +92,6 @@ namespace PPA.ViewModels
             await TaskService.AddTaskAsync(newTask);
             await OnDeleteTask(task);
             await LoadTasks();
-            
-        }
-
-        async Task OnTaskSelected(TaskItem task)
-        {
-            if(task == null)
-                return;
-
-            await Shell.Current.GoToAsync($"{nameof(TaskDetailPage)}?TaskId={task.Id}");
             
         }
 
