@@ -22,7 +22,7 @@
         <xct:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" />
+        <ToolbarItem Text="Add" Command="{Binding AddEventCommand}" />
     </ContentPage.ToolbarItems>
 
     <Grid

@@ -12,16 +12,21 @@ namespace PPA.ViewModels
 {
     public class NewEventViewModel : ViewModelBase
     {
-       /*
-        private string name;
-        private string location;
-        private DateTime startTime;
-        private DateTime endTime;
+       
+        private string title;
+        private string description;
+        private DateTime datetime;
+        private Color color;
+        private string colorName;
 
-        public string EventName { get => name; set => SetProperty(ref name, value); }
-        public string EventLocation { get => location; set => SetProperty(ref location, value); }
-        public DateTime EventStartTime { get => startTime; set => SetProperty(ref startTime, value); }
-        public DateTime EventEndTime { get => endTime; set => SetProperty(ref endTime, value); }
+
+        public string EventTitle { get => title; set => SetProperty(ref title, value); }
+        public string EventDescription { get => description; set => SetProperty(ref description, value); }
+        public DateTime EventDatetime { get => datetime; set => SetProperty(ref datetime, value); }
+        public Color EventColor { get => color; set => SetProperty(ref color, value); }
+
+        public string ColorName { get => colorName; set => SetProperty(ref colorName, value); }
+
 
         public AsyncCommand SaveCommand { get; }
         public AsyncCommand CancelCommand { get; }
@@ -32,26 +37,50 @@ namespace PPA.ViewModels
             SaveCommand = new AsyncCommand(OnSave);
             CancelCommand = new AsyncCommand(OnCancel);
             EventService = DependencyService.Get<IEventDataStore>();
-            /*this.PropertyChanged +=
-                (_, __) => SaveCommand.ChangeCanExecute(); 
+ 
         }
 
         async Task OnSave()
         {
-            if(String.IsNullOrWhiteSpace(name)
-                && String.IsNullOrWhiteSpace(location)
-                && String.IsNullOrWhiteSpace(startTime.ToString())
-                && String.IsNullOrWhiteSpace(endTime.ToString()))
+            if(String.IsNullOrWhiteSpace(title)
+                || String.IsNullOrWhiteSpace(description)
+                || String.IsNullOrWhiteSpace(datetime.ToString())
+                || String.IsNullOrWhiteSpace(color.ToString()))
             {
                 return;
             }
 
+            switch (ColorName)
+            {
+                case "Red":
+                    color = Color.Red;
+                    break;
+                case "Orange":
+                    color = Color.Orange;
+                    break;
+                case "Yellow":
+                    color = Color.Yellow;
+                    break;
+                case "Green":
+                    color = Color.FromHex("#00A000");
+                    break;
+                case "Blue":
+                    color = Color.Blue;
+                    break;
+                case "Purple":
+                    color = Color.FromHex("#8010E0");
+                    break;
+                default:
+                    color = Color.Red;
+                    break;
+            }
+
             var ev = new PPA.Models.Event
             {
-                EventName = name,
-                EventLocation = location,
-                EventStartTime = startTime,
-                EventEndTime = endTime,
+                Title = title,
+                Description = description,
+                DateTime = datetime,
+                Color  = color,
             };
 
             await EventService.AddEventAsync(ev);
@@ -64,7 +93,6 @@ namespace PPA.ViewModels
 
         }
 
-    */
 
     }
 }

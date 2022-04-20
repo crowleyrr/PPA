@@ -7,6 +7,8 @@ using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 using PPA.Models;
+using System.Threading.Tasks;
+using PPA.Views;
 
 namespace PPA.ViewModels
 {
@@ -56,9 +58,13 @@ namespace PPA.ViewModels
         public ObservableRangeCollection<Event> SelectedEvents { get; } = new ObservableRangeCollection<Event>();
         #endregion
 
+        public AsyncCommand AddEventCommand { get; }
+
         #region Constructors
         public EventManagerViewModel()
         {
+            AddEventCommand = new AsyncCommand(OnAddEvent);
+
             foreach (Event Event in Events)
             {
                 Event.DateTime = DateTime.Today.AddDays(Random.Next(-20, 21)).AddSeconds(Random.Next(86400));
@@ -73,6 +79,11 @@ namespace PPA.ViewModels
         private void SelectedDates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SelectedEvents.ReplaceRange(Events.Where(x => SelectedDates.Any(y => x.DateTime.Date == y.Date)).OrderByDescending(x => x.DateTime));
+        }
+
+        private async Task OnAddEvent()
+        {
+            await Shell.Current.GoToAsync(nameof(NewEventPage));
         }
         #endregion
 

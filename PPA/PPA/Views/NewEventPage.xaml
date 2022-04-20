@@ -1,12 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodel="clr-namespace:PPA.ViewModels"
              x:Class="PPA.Views.NewEventPage">
+    <ContentPage.BindingContext>
+        <viewmodel:NewEventViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Name:" FontSize="Large"/>
+            <Entry Text="{Binding EventTitle, Mode=TwoWay}" FontSize="Medium"/>
+            <Label Text="Description" FontSize="Large" />
+            <Editor Text="{Binding EventDescription, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+            <Label Text="Date and Time:" FontSize="Large"/>
+            <viewmodel:DateTimePicker 
+                DateTime="{Binding EventDatetime}" StringFormat="dd-MM-yyyy HH:mm">
+                
+            </viewmodel:DateTimePicker>
+            <Picker Title="Event Color"
+                    TitleColor="Black" 
+                    SelectedItem="{Binding ColorName}"
+                    >
+                <Picker.Items>
+
+                    <x:String>Red</x:String>
+                    <x:String>Orange</x:String>
+                    <x:String>Yellow</x:String>
+                    <x:String>Green</x:String>
+                    <x:String>Blue</x:String>
+                    <x:String>Purple</x:String>
+
+                </Picker.Items>
+            </Picker>
+
+
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
