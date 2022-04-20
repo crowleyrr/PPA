@@ -19,5 +19,11 @@ namespace PPA.Views
         {
             InitializeComponent();
         }
+
+        async void CancelButtonClicked(object sender, EventArgs e) { 
+            await Shell.Current.GoToAsync("..");
+
+        }
+       
     }
 }

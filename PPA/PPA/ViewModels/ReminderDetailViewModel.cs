@@ -14,12 +14,12 @@ namespace PPA.ViewModels
     {
         private string name;
         private DateTime time;
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string ReminderName { get => name; set => SetProperty(ref name, value); }
         public DateTime ReminderTime { get => time; set => SetProperty(ref time, value); }
 
         IReminderDataStore ReminderService;
-        public async void LoadReminderId(int reminderId)
+        public async void LoadReminderId(Guid reminderId)
         {
             try
             {

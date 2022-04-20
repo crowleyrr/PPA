@@ -18,14 +18,12 @@ namespace PPA.ViewModels
         public ObservableCollection<Reminder> Reminders { get; }
         public AsyncCommand LoadRemindersCommand { get; }
         public AsyncCommand AddReminderCommand { get;  }
-        public AsyncCommand<Reminder> ReminderTapped { get; }
 
         IReminderDataStore ReminderService;
         public ReminderManagerViewModel()
         {
             Reminders = new ObservableCollection<Reminder>();
             LoadRemindersCommand = new AsyncCommand(LoadReminders);
-            ReminderTapped = new AsyncCommand<Reminder>(OnReminderSelected);
             AddReminderCommand = new AsyncCommand(OnAddReminder);
             ReminderService = DependencyService.Get<IReminderDataStore>();
         }
@@ -55,12 +53,6 @@ namespace PPA.ViewModels
             await Shell.Current.GoToAsync(nameof(NewReminderPage));
         }
 
-        async Task OnReminderSelected(Reminder reminder)
-        {
-            if (reminder == null)
-                return;
 
-            await Shell.Current.GoToAsync($"{nameof(ReminderDetailPage)}?ReminderId={reminder.Id}");
-        }
     }
 }

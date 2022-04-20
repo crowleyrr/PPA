@@ -35,14 +35,6 @@
                                 <Button Grid.Row="0" Grid.Column="1" Text="Snooze"/>
                                 <Button Grid.Row="1" Grid.Column="1" Text="Done" Style="{StaticResource DoneButton}"></Button>
 
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ReminderManagerViewModel}}, Path=ReminderTapped}"		
-                                CommandParameter="{Binding .}">
-                                    </TapGestureRecognizer>
-                                </Grid.GestureRecognizers>
                             </Grid>
                             <BoxView HeightRequest="0.5" Color="Gray"/>
 

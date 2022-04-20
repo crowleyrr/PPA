@@ -31,17 +31,11 @@ namespace PPA.Services
         public async Task AddReminderAsync(PPA.Models.Reminder reminder)
         {
             await Init();
+            reminder.Id = Guid.NewGuid();
             var id = await db.InsertAsync(reminder);
         }
 
-        /* do later
-        public async Task UpdateReminderAsync(Reminder reminder)
-        {
-             
-        }
-
-        */
-        public async Task DeleteReminderAsync(int id)
+        public async Task DeleteReminderAsync(Guid id)
         {
             await Init();
             await db.DeleteAsync<PPA.Models.Reminder>(id);
@@ -55,7 +49,7 @@ namespace PPA.Services
             return reminders;
         }
 
-        public async Task<PPA.Models.Reminder> GetReminderAsync(int id)
+        public async Task<PPA.Models.Reminder> GetReminderAsync(Guid id)
         {
             await Init();
             var reminder = await db.Table<PPA.Models.Reminder>().FirstOrDefaultAsync(c => c.Id == id);

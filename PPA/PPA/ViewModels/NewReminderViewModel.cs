@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +14,10 @@ namespace PPA.ViewModels
     public class NewReminderViewModel : ViewModelBase
     {
         private string name;
-        private DateTime time;
+        private DateTime datetime;
 
         public string ReminderName { get => name; set => SetProperty(ref name, value); }
-        public DateTime ReminderTime { get => time; set => SetProperty(ref time, value); }
+        public DateTime ReminderTime { get => datetime; set => SetProperty(ref datetime, value); }
 
         public AsyncCommand SaveCommand { get; }
         public AsyncCommand CancelCommand { get; }
@@ -33,24 +34,34 @@ namespace PPA.ViewModels
 
         async Task OnCancel()
         {
+            
+            // pop current page off navigation stack
             await Shell.Current.GoToAsync("..");
         }
 
-        private async Task OnSave()
+        public async Task OnSave()
         {
             if (String.IsNullOrWhiteSpace(name)
-                && String.IsNullOrWhiteSpace(time.ToString()))
+                || String.IsNullOrWhiteSpace(datetime.ToString()))
             {
                 return;
             }
 
-            var newReminder = new Reminder()
+            try
             {
-                ReminderName = ReminderName,
-                ReminderTime = ReminderTime,
-            };
-
-            await ReminderService.AddReminderAsync(newReminder);
+                Reminder newReminder = new Reminder()
+                {
+                    ReminderName = name,
+                    ReminderTime = datetime,
+                };
+                Console.WriteLine(newReminder);
+                await ReminderService.AddReminderAsync(newReminder);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERRORRRRRRRRRRRR");
+               Debug.WriteLine(ex);
+            }
             await Shell.Current.GoToAsync("..");
         }
     }

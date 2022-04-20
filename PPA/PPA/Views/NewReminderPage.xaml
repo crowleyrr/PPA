@@ -9,11 +9,16 @@
             <Label Text="Reminder" FontSize="Medium" />
             <Entry Text="{Binding ReminderName, Mode=TwoWay}" FontSize="Medium" />
             <Label Text="Remind at" FontSize="Medium" />
-            <DatePicker x:Name="reminderDatePicker"
-                    Format="D"
-                    Margin="30, 0, 0, 30" />
+            <DatePicker 
+                Date="{Binding ReminderTime}" 
+                Format="D"
+                
+                
+                >
+
+            </DatePicker>
             <StackLayout Orientation="Horizontal">
-                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand" Clicked="CancelButtonClicked"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
             </StackLayout>
         </StackLayout>
