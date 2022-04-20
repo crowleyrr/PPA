@@ -7,9 +7,8 @@ namespace PPA.Services
     public interface IEventDataStore
     {
         Task AddEventAsync(Event item);
-       /* Task<bool> UpdateEventAsync(T item); */
         Task DeleteEventAsync(int id);
-        Task<Event> GetEventAsync(int id);
+       // Task<Event> GetEventAsync(int id);
         Task<IEnumerable<Event>> GetEventsAsync();
     }
 }

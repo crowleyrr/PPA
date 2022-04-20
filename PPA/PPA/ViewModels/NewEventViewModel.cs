@@ -16,16 +16,13 @@ namespace PPA.ViewModels
         private string title;
         private string description;
         private DateTime datetime;
-        private Color color;
-        private string colorName;
+
 
 
         public string EventTitle { get => title; set => SetProperty(ref title, value); }
         public string EventDescription { get => description; set => SetProperty(ref description, value); }
         public DateTime EventDatetime { get => datetime; set => SetProperty(ref datetime, value); }
-        public Color EventColor { get => color; set => SetProperty(ref color, value); }
-
-        public string ColorName { get => colorName; set => SetProperty(ref colorName, value); }
+  
 
 
         public AsyncCommand SaveCommand { get; }
@@ -44,35 +41,9 @@ namespace PPA.ViewModels
         {
             if(String.IsNullOrWhiteSpace(title)
                 || String.IsNullOrWhiteSpace(description)
-                || String.IsNullOrWhiteSpace(datetime.ToString())
-                || String.IsNullOrWhiteSpace(color.ToString()))
+                || String.IsNullOrWhiteSpace(datetime.ToString()))
             {
                 return;
-            }
-
-            switch (ColorName)
-            {
-                case "Red":
-                    color = Color.Red;
-                    break;
-                case "Orange":
-                    color = Color.Orange;
-                    break;
-                case "Yellow":
-                    color = Color.Yellow;
-                    break;
-                case "Green":
-                    color = Color.FromHex("#00A000");
-                    break;
-                case "Blue":
-                    color = Color.Blue;
-                    break;
-                case "Purple":
-                    color = Color.FromHex("#8010E0");
-                    break;
-                default:
-                    color = Color.Red;
-                    break;
             }
 
             var ev = new PPA.Models.Event
@@ -80,7 +51,6 @@ namespace PPA.ViewModels
                 Title = title,
                 Description = description,
                 DateTime = datetime,
-                Color  = color,
             };
 
             await EventService.AddEventAsync(ev);

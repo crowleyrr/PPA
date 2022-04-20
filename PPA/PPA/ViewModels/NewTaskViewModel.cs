@@ -39,7 +39,7 @@ namespace PPA.ViewModels
         async Task OnSave()
         {
             if (String.IsNullOrWhiteSpace(name)
-                && String.IsNullOrWhiteSpace(description))
+                || String.IsNullOrWhiteSpace(description))
             {
                 return;
             }

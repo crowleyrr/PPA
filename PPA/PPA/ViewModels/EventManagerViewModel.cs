@@ -16,7 +16,6 @@ namespace PPA.ViewModels
     {
         #region Properties
         public static readonly Random Random = new Random();
-        public List<Color> Colors { get; } = new List<Color>() { Color.Red, Color.Orange, Color.Yellow, Color.FromHex("#00A000"), Color.Blue, Color.FromHex("#8010E0") };
         public ObservableRangeCollection<Event> Events { get; } = new ObservableRangeCollection<Event>()
         {
             new Event() { Title = "Bowling", Description = "Bowling with friends" },
@@ -68,7 +67,6 @@ namespace PPA.ViewModels
             foreach (Event Event in Events)
             {
                 Event.DateTime = DateTime.Today.AddDays(Random.Next(-20, 21)).AddSeconds(Random.Next(86400));
-                Event.Color = Colors[Random.Next(6)];
             }
 
             SelectedDates.CollectionChanged += SelectedDates_CollectionChanged;

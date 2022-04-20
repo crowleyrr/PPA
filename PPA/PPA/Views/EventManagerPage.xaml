@@ -123,7 +123,7 @@
                                                             HorizontalOptions="CenterAndExpand"
                                                             VerticalOptions="Center"
                                                             WidthRequest="7"
-                                                            Color="{Binding Color}"/>
+                                                            Color="Blue"/>
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>
 
@@ -165,7 +165,7 @@
                             BackgroundColor="{StaticResource ContentBackgroundColor}"
                             CornerRadius="10">
                             <StackLayout Orientation="Horizontal" Spacing="0">
-                                <BoxView BackgroundColor="{Binding Color}" WidthRequest="20"/>
+                                <BoxView BackgroundColor="CornflowerBlue" WidthRequest="20"/>
 
                                 <StackLayout Padding="10" Spacing="0">
                                     <Label

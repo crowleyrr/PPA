@@ -1,18 +1,20 @@
-﻿using PPA.Models;
+﻿using PPA.Services;
+using PPA.Models;
 using SQLite;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using Xamarin.Forms;
+
+[assembly: Dependency(typeof(EventService))]
 
 namespace PPA.Services
 {
-    public class EventService 
+    public class EventService : IEventDataStore
     {
-        /*
-
-        : IEventDataStore
-
+        
         SQLiteAsyncConnection db;
 
         async Task Init()
@@ -33,11 +35,6 @@ namespace PPA.Services
             var id = await db.InsertAsync(ev);
         }
 
-        /* do later
-        public async Task UpdateEventAsync(Event ev)
-        {
-           
-        }
          
         public async Task DeleteEventAsync(int id)
         {
@@ -53,14 +50,15 @@ namespace PPA.Services
             return events;
         }
 
+        /*
         public async Task<Event> GetEventAsync(int id)
         {
             await Init();
             var ev = await db.Table<Event>().FirstOrDefaultAsync(c => c.Id == id);
 
             return ev;
-        }
-        */
+        } */
+        
     }
 }
 

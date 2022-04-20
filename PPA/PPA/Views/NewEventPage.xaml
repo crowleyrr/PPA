@@ -14,23 +14,8 @@
             <Label Text="Date and Time:" FontSize="Large"/>
             <viewmodel:DateTimePicker 
                 DateTime="{Binding EventDatetime}" StringFormat="dd-MM-yyyy HH:mm">
-                
+
             </viewmodel:DateTimePicker>
-            <Picker Title="Event Color"
-                    TitleColor="Black" 
-                    SelectedItem="{Binding ColorName}"
-                    >
-                <Picker.Items>
-
-                    <x:String>Red</x:String>
-                    <x:String>Orange</x:String>
-                    <x:String>Yellow</x:String>
-                    <x:String>Green</x:String>
-                    <x:String>Blue</x:String>
-                    <x:String>Purple</x:String>
-
-                </Picker.Items>
-            </Picker>
 
 
 
