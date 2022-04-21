@@ -31,9 +31,9 @@
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="Tasks" Icon="icon_about.png" Route="TaskManagerPage" ContentTemplate="{DataTemplate local:TaskManagerPage}" />
-        <ShellContent Title="Events" Icon="icon_about.png" Route="EventManagerPage" ContentTemplate="{DataTemplate local:EventManagerPage}" />
-        <ShellContent Title="Reminders" Icon="icon_about.png" Route="ReminderManagerPage" ContentTemplate="{DataTemplate local:ReminderManagerPage}"/>
+        <ShellContent Title="Tasks" Icon="checkmark.png" Route="TaskManagerPage" ContentTemplate="{DataTemplate local:TaskManagerPage}" />
+        <ShellContent Title="Events" Icon="calendar.png" Route="EventManagerPage" ContentTemplate="{DataTemplate local:EventManagerPage}" />
+        <ShellContent Title="Reminders" Icon="exclamation_point.png" Route="ReminderManagerPage" ContentTemplate="{DataTemplate local:ReminderManagerPage}"/>
 
     </TabBar>
 

@@ -10,13 +10,15 @@
             <Entry Text="{Binding ReminderName, Mode=TwoWay}" FontSize="Medium" />
             <Label Text="Remind at" FontSize="Medium" />
             <DatePicker 
-                Date="{Binding ReminderTime}" 
+                Date="{Binding ReminderDate}" 
                 Format="D"
                 
                 
-                >
-
-            </DatePicker>
+               />
+            <TimePicker
+                   Time="{Binding ReminderTime}"
+                   
+                   />
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand" Clicked="CancelButtonClicked"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>

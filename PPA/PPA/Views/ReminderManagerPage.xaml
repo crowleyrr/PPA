@@ -42,8 +42,16 @@
                     </DataTemplate>
 
                 </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No upcoming reminders"
+                           FontSize="25"
+                           Padding="60,40,10,10"
+                           ></Label>
+                </CollectionView.EmptyView>
             </CollectionView>
 
+
+            
         </RefreshView>
     </StackLayout>
     <!--

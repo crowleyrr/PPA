@@ -146,4 +146,7 @@
       <Name>PPA</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PPA_AppLogo.png" />
+  </ItemGroup>
 </Project>
