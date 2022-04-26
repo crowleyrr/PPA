@@ -15,6 +15,9 @@ namespace PPA.Views
         public NewEventPage()
         {
             InitializeComponent();
+            datePicker.MinimumDate = DateTime.Now.Date;
+            datePicker.Date = DateTime.Now.Date;
+            timePicker.Time = DateTime.Now.TimeOfDay;
         }
     }
 }

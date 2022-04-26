@@ -18,12 +18,10 @@ namespace PPA.Views
         public NewReminderPage()
         {
             InitializeComponent();
+            datePicker.MinimumDate = DateTime.Now.Date;
+            datePicker.Date = DateTime.Now.Date;
+            timePicker.Time = DateTime.Now.TimeOfDay;
         }
 
-        async void CancelButtonClicked(object sender, EventArgs e) { 
-            await Shell.Current.GoToAsync("..");
-
-        }
-       
     }
 }

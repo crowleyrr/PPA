@@ -17,8 +17,8 @@ namespace PPA.ViewModels
         private DateTime datetime;
 
         public string ReminderName { get => name; set => SetProperty(ref name, value); }
-        public DateTime ReminderTime { get => datetime; set => SetProperty(ref datetime, value); }
-        public DateTime ReminderDate { get => datetime; set => SetProperty(ref datetime, value); }
+        public DateTime ReminderTime { get; }
+        public DateTime ReminderDate { get; }
 
         public AsyncCommand SaveCommand { get; }
         public AsyncCommand CancelCommand { get; }
@@ -47,18 +47,15 @@ namespace PPA.ViewModels
             if (String.IsNullOrWhiteSpace(name)
                 && String.IsNullOrWhiteSpace(datetime.ToString()))
             {
-                await Shell.Current.GoToAsync("..");
-
                 return;
             }
 
-                Reminder newReminder = new Reminder()
-                {
-                    ReminderName = name,
-                    ReminderTime = datetime,
-                };
-                Console.WriteLine(newReminder);
-                await ReminderService.AddReminderAsync(newReminder);
+            Reminder newReminder = new Reminder()
+            {
+                ReminderName = name,
+                ReminderTime = datetime,
+            };
+            await ReminderService.AddReminderAsync(newReminder);
             await Shell.Current.GoToAsync("..");
         }
     }

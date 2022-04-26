@@ -25,6 +25,7 @@
         <ToolbarItem Text="Add" Command="{Binding AddEventCommand}" />
     </ContentPage.ToolbarItems>
 
+    <RefreshView x:DataType="ViewModels:EventManagerViewModel" Command="{Binding LoadEventsCommand}">
     <Grid
         ColumnSpacing="0"
         RowDefinitions="Auto,*"
@@ -193,6 +194,7 @@
         </CollectionView>
 
     </Grid>
+     </RefreshView>
 
     <!--
     

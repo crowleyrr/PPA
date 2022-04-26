@@ -16,12 +16,16 @@ namespace PPA.ViewModels
         private string title;
         private string description;
         private DateTime datetime;
+        private DateTime date;
+        private TimeSpan time;
 
 
 
         public string EventTitle { get => title; set => SetProperty(ref title, value); }
         public string EventDescription { get => description; set => SetProperty(ref description, value); }
-        public DateTime EventDatetime { get => datetime; set => SetProperty(ref datetime, value); }
+        public DateTime DateTime { get => datetime; set => SetProperty(ref datetime, value); }
+        public DateTime EventDate { get => date; set => SetProperty(ref date, value); }
+        public TimeSpan EventTime { get => time; set => SetProperty(ref time, value); }
   
 
 
@@ -34,7 +38,7 @@ namespace PPA.ViewModels
             SaveCommand = new AsyncCommand(OnSave);
             CancelCommand = new AsyncCommand(OnCancel);
             EventService = DependencyService.Get<IEventDataStore>();
- 
+             
         }
 
         async Task OnSave()
@@ -50,7 +54,7 @@ namespace PPA.ViewModels
             {
                 Title = title,
                 Description = description,
-                DateTime = datetime,
+                DateTime = EventDate.Date.Add(EventTime),
             };
 
             await EventService.AddEventAsync(ev);

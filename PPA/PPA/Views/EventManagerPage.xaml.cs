@@ -8,11 +8,12 @@ namespace PPA.Views
 
     public partial class EventManagerPage : ContentPage
     {
+        EventManagerViewModel _viewModel;
         public EventManagerPage()
         {
-            try { 
-            InitializeComponent();
-            BindingContext = new EventManagerViewModel();
+            try {
+                InitializeComponent();
+                BindingContext = _viewModel = new EventManagerViewModel();
             } catch(System.Exception ex)
             {
 

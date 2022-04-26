@@ -25,6 +25,7 @@ namespace PPA.ViewModels
             Reminders = new ObservableCollection<Reminder>();
             LoadRemindersCommand = new AsyncCommand(LoadReminders);
             AddReminderCommand = new AsyncCommand(OnAddReminder);
+
             ReminderService = DependencyService.Get<IReminderDataStore>();
         }
 
