@@ -18,12 +18,14 @@ namespace PPA.ViewModels
     {
         #region Properties
         public ObservableRangeCollection<Event> Events { get; }
-        public ObservableRangeCollection<DateTime> SelectedDates { get; } = new ObservableRangeCollection<DateTime>();
-        public ObservableRangeCollection<Event> SelectedEvents { get; } = new ObservableRangeCollection<Event>();
+        public ObservableRangeCollection<DateTime> SelectedDates { get; }
+        public ObservableRangeCollection<Event> SelectedEvents { get; }
 
         #endregion
 
         public AsyncCommand AddEventCommand { get; }
+
+        public RefreshView refreshview = new RefreshView();
         public AsyncCommand LoadEventsCommand { get; }
 
         IEventDataStore EventService;
@@ -34,6 +36,11 @@ namespace PPA.ViewModels
             AddEventCommand = new AsyncCommand(OnAddEvent);
             LoadEventsCommand = new AsyncCommand(LoadEvents);
             EventService = DependencyService.Get<IEventDataStore>();
+
+            Events = new ObservableRangeCollection<Event>();
+            SelectedDates = new ObservableRangeCollection<DateTime>(); 
+            SelectedEvents = new ObservableRangeCollection<Event>();
+
 
             SelectedDates.CollectionChanged += SelectedDates_CollectionChanged;
 
@@ -53,7 +60,7 @@ namespace PPA.ViewModels
 
         async Task LoadEvents()
         {
-            //IsBusy = true;
+           //IsBusy = true;
             try
             {
                 Events.Clear();
@@ -67,16 +74,17 @@ namespace PPA.ViewModels
             {
                 Debug.WriteLine(ex);
             }
-            finally
-             {
-              // IsBusy = false;
-             } 
+
+            refreshview.IsRefreshing = false;
+           // IsBusy = false;
+           // await Task.Delay(10000);
         } 
+        
 
 
         public void OnAppearing()
         {
-          // IsBusy = true;
+         // IsBusy = true;
         }
         #endregion
 

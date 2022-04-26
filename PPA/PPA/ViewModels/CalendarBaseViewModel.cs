@@ -11,6 +11,16 @@ namespace PPA.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
+       /* public bool IsBusy
+        {
+            get { return IsBusy; }
+            set
+            {
+                IsBusy = value;
+                OnPropertyChanged(nameof(IsBusy));
+            }
+        } */
+
         #region Methods
         protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
