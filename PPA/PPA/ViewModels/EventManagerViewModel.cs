@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
-using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.CommunityToolkit.ObjectModel; 
 using Xamarin.Forms;
 using PPA.Models;
 using System.Threading.Tasks;
@@ -21,11 +21,22 @@ namespace PPA.ViewModels
         public ObservableRangeCollection<DateTime> SelectedDates { get; }
         public ObservableRangeCollection<Event> SelectedEvents { get; }
 
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get
+            {
+                return _isBusy;
+            }
+            set
+            {
+                _isBusy = value;
+                OnPropertyChanged("IsBusy");
+            }
+        }
         #endregion
 
         public AsyncCommand AddEventCommand { get; }
-
-        public RefreshView refreshview = new RefreshView();
         public AsyncCommand LoadEventsCommand { get; }
 
         IEventDataStore EventService;
@@ -60,31 +71,25 @@ namespace PPA.ViewModels
 
         async Task LoadEvents()
         {
-           //IsBusy = true;
-            try
+            IsBusy = true;
+#if DEBUG
+            await Task.Delay(500);
+#endif 
+            Events.Clear();
+            var events = await EventService.GetEventsAsync();
+            foreach (var ev in events)
             {
-                Events.Clear();
-                var events = await EventService.GetEventsAsync();
-                foreach (var ev in events)
-                {
-                    Events.Add(ev);
-                }
+                Events.Add(ev);
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-
-            refreshview.IsRefreshing = false;
-           // IsBusy = false;
-           // await Task.Delay(10000);
+            
+           IsBusy = false;
         } 
         
 
 
         public void OnAppearing()
         {
-         // IsBusy = true;
+         IsBusy = true;
         }
         #endregion
 

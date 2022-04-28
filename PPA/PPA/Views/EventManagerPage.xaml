@@ -7,10 +7,10 @@
     xmlns:ViewModels="clr-namespace:PPA.ViewModels"
     xmlns:xc="clr-namespace:XCalendar;assembly=XCalendar"
     xmlns:xcModels="clr-namespace:XCalendar.Models;assembly=XCalendar"
-    xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:xcConverters="clr-namespace:XCalendar.Converters;assembly=XCalendar"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:xcConverters="clr-namespace:XCalendar.Converters;assembly=XCalendar" 
+             x:DataType="ViewModels:EventManagerViewModel"
              x:Name="This"
     Title="Event Calendar"
-    x:DataType="{x:Type ViewModels:EventManagerViewModel}"
     xct:SafeAreaEffect.SafeArea="True"
              >
     <ContentPage.Resources>
@@ -25,7 +25,7 @@
         <ToolbarItem Text="Add" Command="{Binding AddEventCommand}" />
     </ContentPage.ToolbarItems>
 
-    <RefreshView Command="{Binding LoadEventsCommand}">
+    <RefreshView x:DataType="ViewModels:EventManagerViewModel" Command="{Binding LoadEventsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
     <Grid
         ColumnSpacing="0"
         RowDefinitions="Auto,*"
@@ -63,14 +63,6 @@
                                 TodayBorderColor="{StaticResource CalendarPrimaryColor}"
                                 TodayTextColor="{StaticResource CalendarBackgroundTextColor}">
 
-                                <!--
-                                    Setting ControlTemplate instead of using a StackLayout with views inside because I don't require different parts of the view
-                                    to have specific user interactions.
-                                -->
-                                <!--
-                                    If I wanted to have a seperate tappable section that calls the same command when selecting a date,
-                                    I would put the view in a layout in the parent ContenView and use CalendarView's 'ChangeDateSelectionCommand'.
-                                -->
                                 <xc:CalendarDayView.ControlTemplate>
                                     <ControlTemplate>
                                         <!--  Using a Grid to stack views on the z axis  -->
