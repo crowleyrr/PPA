@@ -89,11 +89,10 @@ namespace PPA.ViewModels
         } 
         
 
-
-        public void OnAppearing()
+        public async Task OnAppearing()
         {
-         IsBusy = true;
-            // await LoadEvents();
+            IsBusy = true;
+            await LoadEvents();
         }
 
         private async Task OnDeleteEvent(Event ev)
