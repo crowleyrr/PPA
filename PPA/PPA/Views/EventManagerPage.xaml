@@ -159,8 +159,8 @@
                             CornerRadius="10">
                             <StackLayout Orientation="Horizontal" Spacing="0">
                                 <BoxView BackgroundColor="CornflowerBlue" WidthRequest="20"/>
-
-                                <StackLayout Padding="10" Spacing="0">
+                                    <Grid>
+                                <StackLayout Padding="10" Spacing="0" Grid.Column="0">
                                     <Label
                                         FontAttributes="Bold"
                                         FontSize="20"
@@ -178,11 +178,22 @@
                                         Text="{Binding Description}"
                                         TextColor="{StaticResource ContentTextColor}"/>
                                 </StackLayout>
-                            </StackLayout>
+                                        <Button Text="Delete" 
+                                                Grid.Column="1"
+                                                Margin="100,0,0,0"
+                                                BackgroundColor="#0004A0"
+                                                TextColor="white"
+                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:EventManagerViewModel}}, Path=DeleteEventCommand}"		
+                                CommandParameter="{Binding .}"
+                                                />
+                                    </Grid>
+                                </StackLayout>
+                                
                         </Frame>
                     </ContentView>
                 </DataTemplate>
-            </CollectionView.ItemTemplate>
+                   
+                </CollectionView.ItemTemplate>
         </CollectionView>
 
     </Grid>

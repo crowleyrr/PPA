@@ -36,6 +36,7 @@ namespace PPA.ViewModels
         }
         #endregion
 
+        public AsyncCommand<Event> DeleteEventCommand { get; }
         public AsyncCommand AddEventCommand { get; }
         public AsyncCommand LoadEventsCommand { get; }
 
@@ -46,6 +47,8 @@ namespace PPA.ViewModels
         {
             AddEventCommand = new AsyncCommand(OnAddEvent);
             LoadEventsCommand = new AsyncCommand(LoadEvents);
+            DeleteEventCommand = new AsyncCommand<Event>(OnDeleteEvent);
+            
             EventService = DependencyService.Get<IEventDataStore>();
 
             Events = new ObservableRangeCollection<Event>();
@@ -90,6 +93,14 @@ namespace PPA.ViewModels
         public void OnAppearing()
         {
          IsBusy = true;
+            // await LoadEvents();
+        }
+
+        private async Task OnDeleteEvent(Event ev)
+        {
+            await EventService.DeleteEventAsync(ev.Id);
+            SelectedEvents.Remove(ev);
+            await LoadEvents();
         }
         #endregion
 

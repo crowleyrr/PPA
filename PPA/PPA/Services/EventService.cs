@@ -32,11 +32,12 @@ namespace PPA.Services
         public async Task AddEventAsync(Event ev)
         {
             await Init();
+            ev.Id = Guid.NewGuid();
             var id = await db.InsertAsync(ev);
         }
 
          
-        public async Task DeleteEventAsync(int id)
+        public async Task DeleteEventAsync(Guid id)
         {
             await Init();
             await db.DeleteAsync<Event>(id);
