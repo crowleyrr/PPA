@@ -15,10 +15,13 @@ namespace PPA.ViewModels
     {
         private string name;
         private DateTime datetime;
+        private DateTime date;
+        private TimeSpan time;
 
         public string ReminderName { get => name; set => SetProperty(ref name, value); }
-        public DateTime ReminderTime { get; }
-        public DateTime ReminderDate { get; }
+        public DateTime DateTime { get => datetime; set => SetProperty(ref datetime, value); }
+        public DateTime ReminderDate { get => date; set => SetProperty(ref date, value); }
+        public TimeSpan ReminderTime { get => time; set => SetProperty(ref time, value); }
 
         public AsyncCommand SaveCommand { get; }
         public AsyncCommand CancelCommand { get; }
@@ -42,7 +45,6 @@ namespace PPA.ViewModels
 
         private async Task OnSave()
         {
-            datetime = ReminderDate.Date.Add(ReminderTime.TimeOfDay);
 
             if (String.IsNullOrWhiteSpace(name)
                 && String.IsNullOrWhiteSpace(datetime.ToString()))
@@ -53,7 +55,7 @@ namespace PPA.ViewModels
             Reminder newReminder = new Reminder()
             {
                 ReminderName = name,
-                ReminderTime = datetime,
+                ReminderTime = ReminderDate.Date.Add(ReminderTime),
             };
             await ReminderService.AddReminderAsync(newReminder);
             await Shell.Current.GoToAsync("..");

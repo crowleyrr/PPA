@@ -4,6 +4,9 @@
              x:Class="PPA.Views.NewReminderPage"
              Shell.PresentationMode="ModalAnimated"
              Title="New Reminder">
+    <ContentPage.BindingContext>
+        <viewmodels:NewReminderViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
             <StackLayout
             Spacing="8"
@@ -33,7 +36,7 @@
                 VerticalTextAlignment="Center" />
                 <DatePicker
                 x:Name="datePicker"
-                Date="{Binding ReminderDate, Mode=TwoWay}"
+                Date="{Binding ReminderDate}"
                 HeightRequest="40"
                 FontSize="16"
                 TextColor="Black"
@@ -48,7 +51,7 @@
                 VerticalTextAlignment="Center" />
                 <TimePicker
                 x:Name="timePicker"
-                Time="{Binding ReminderTime, Mode=TwoWay}"
+                Time="{Binding ReminderTime}"
                 HeightRequest="40"
                 FontSize="16"
                 TextColor="Black"

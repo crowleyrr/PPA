@@ -33,7 +33,7 @@
                                 Padding="30,0,0,10"
                              />
                                 <Button Grid.Row="0" Grid.Column="1" Text="Snooze"/>
-                                <Button Grid.Row="1" Grid.Column="1" Text="Done" Style="{StaticResource DoneButton}"></Button>
+                                <Button Grid.Row="1" Grid.Column="1" Text="Done"></Button>
 
                             </Grid>
                             <BoxView HeightRequest="0.5" Color="Gray"/>
