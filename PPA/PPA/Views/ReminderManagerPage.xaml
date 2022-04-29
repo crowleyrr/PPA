@@ -8,6 +8,7 @@
     <StackLayout>
         <Label Text="Upcoming Reminders"
                FontSize="30"
+               HorizontalTextAlignment="Center"
                Padding="10"></Label>
         <BoxView HeightRequest="1.5" Color="Gray"/>
 
@@ -23,7 +24,7 @@
                                 <Label Grid.Row="0" Text="{Binding ReminderName}"
                                 VerticalOptions="Center" 
                                 HorizontalOptions="StartAndExpand"
-                                FontSize="20"
+                                FontSize="25"
                                 Padding="10,0,0,0"
                              />
                                 <Label Grid.Row="1" Text="{Binding ReminderTime}"
@@ -32,8 +33,13 @@
                                 FontSize="15"
                                 Padding="30,0,0,10"
                              />
-                                <Button Grid.Row="0" Grid.Column="1" Text="Snooze"/>
-                                <Button Grid.Row="1" Grid.Column="1" Text="Done"></Button>
+                                <Button Grid.Row="0" Grid.Column="1" Text="Snooze"
+                                       Command="{Binding Source={RelativeSource AncestorType={x:Type local:ReminderManagerViewModel}}, Path=SnoozeReminderCommand}"		
+                                CommandParameter="{Binding .}">
+                                </Button>
+                                <Button Grid.Row="0" Grid.Column="2" Text="Done"
+                                       Command="{Binding Source={RelativeSource AncestorType={x:Type local:ReminderManagerViewModel}}, Path=DeleteReminderCommand}"		
+                                CommandParameter="{Binding .}"></Button>
 
                             </Grid>
                             <BoxView HeightRequest="0.5" Color="Gray"/>

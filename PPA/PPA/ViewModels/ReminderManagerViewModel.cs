@@ -18,6 +18,9 @@ namespace PPA.ViewModels
         public ObservableCollection<Reminder> Reminders { get; }
         public AsyncCommand LoadRemindersCommand { get; }
         public AsyncCommand AddReminderCommand { get;  }
+        public AsyncCommand<Reminder> DeleteReminderCommand { get; }
+        public AsyncCommand<Reminder> SnoozeReminderCommand { get; }
+
 
         IReminderDataStore ReminderService;
         public ReminderManagerViewModel()
@@ -25,6 +28,8 @@ namespace PPA.ViewModels
             Reminders = new ObservableCollection<Reminder>();
             LoadRemindersCommand = new AsyncCommand(LoadReminders);
             AddReminderCommand = new AsyncCommand(OnAddReminder);
+            DeleteReminderCommand = new AsyncCommand<Reminder>(OnDeleteReminder);
+            SnoozeReminderCommand = new AsyncCommand<Reminder>(SnoozeReminder);
 
             ReminderService = DependencyService.Get<IReminderDataStore>();
         }
@@ -52,6 +57,25 @@ namespace PPA.ViewModels
         private async Task OnAddReminder()
         {
             await Shell.Current.GoToAsync(nameof(NewReminderPage));
+        }
+
+        private async Task OnDeleteReminder(Reminder reminder)
+        {
+            await ReminderService.DeleteReminderAsync(reminder.Id);
+            await LoadReminders();
+
+        }
+
+        private async Task SnoozeReminder(Reminder reminder)
+        {
+            Reminder newReminder = new Reminder()
+            {
+                ReminderName = reminder.ReminderName,
+                ReminderTime = reminder.ReminderTime.AddHours(1),
+            };
+            await OnDeleteReminder(reminder);
+            await ReminderService.AddReminderAsync(newReminder);
+            await LoadReminders();
         }
 
 
