@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers.Commands;
+using Plugin.LocalNotification;
 using PPA.Models;
 using PPA.Services;
 using System;
@@ -57,6 +58,25 @@ namespace PPA.ViewModels
                 DateTime = EventDate.Date.Add(EventTime),
             };
 
+            await NotificationCenter.Current.Show((notification) => notification
+           .WithScheduleOptions((schedule) => schedule
+                   .NotifyAt(EventDate.Date.Add(EventTime)) // Used for Scheduling local notification, if not specified notification will show immediately.
+                   .Build())
+                       .WithTitle("Happening now: " + EventTitle)
+                       .WithDescription(EventDescription)
+                       .WithReturningData("Dummy Data") // Returning data when tapped on notification.
+                       .WithNotificationId(100)
+                       .Create());
+
+            await NotificationCenter.Current.Show((notification) => notification
+          .WithScheduleOptions((schedule) => schedule
+                  .NotifyAt(EventDate.Date.Add(EventTime).AddMinutes(-30)) // Used for Scheduling local notification, if not specified notification will show immediately.
+                  .Build())
+                      .WithTitle("Happening soon: " + EventTitle + " at " + EventDate.Date.Add(EventTime))
+                      .WithDescription(EventDescription)
+                      .WithReturningData("Dummy Data") // Returning data when tapped on notification.
+                      .WithNotificationId(100)
+                      .Create());
             await EventService.AddEventAsync(ev);
             await Shell.Current.GoToAsync("..");
         }

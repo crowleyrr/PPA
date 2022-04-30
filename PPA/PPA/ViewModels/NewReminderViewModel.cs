@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MvvmHelpers.Commands;
+using Plugin.LocalNotification;
 using PPA.Models;
 using PPA.Services;
 using Xamarin.Forms;
@@ -58,6 +59,16 @@ namespace PPA.ViewModels
                 ReminderTime = ReminderDate.Date.Add(ReminderTime),
             };
             await ReminderService.AddReminderAsync(newReminder);
+
+            await NotificationCenter.Current.Show((notification) => notification
+            .WithScheduleOptions((schedule) => schedule
+                    .NotifyAt(ReminderDate.Date.Add(ReminderTime)) // Used for Scheduling local notification, if not specified notification will show immediately.
+                    .Build())
+                        .WithTitle("Don't forget:")
+                        .WithDescription(ReminderName)
+                        .WithReturningData("Dummy Data") // Returning data when tapped on notification.
+                        .WithNotificationId(100)
+                        .Create());
             await Shell.Current.GoToAsync("..");
         }
     }
