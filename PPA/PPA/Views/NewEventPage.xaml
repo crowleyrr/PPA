@@ -40,7 +40,7 @@
                 HeightRequest="40"
                 ReturnType="Done"
                 HorizontalOptions="FillAndExpand" />
-            
+
             <Label
                 Text="Date"
                 TextColor="Gray"
@@ -75,25 +75,5 @@
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
             </StackLayout>
         </StackLayout>
-
-        <!-- <StackLayout>
-            <Label Text="Name:" FontSize="Large"/>
-            <Entry Text="{Binding EventTitle, Mode=TwoWay}" FontSize="Medium"/>
-            <Label Text="Description" FontSize="Large" />
-            <Editor Text="{Binding EventDescription, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
-            <Label Text="Date and Time:" FontSize="Large"/>
-            <viewmodel:DateTimePicker 
-                DateTime="{Binding EventDatetime}" StringFormat="dd-MM-yyyy HH:mm">
-
-            </viewmodel:DateTimePicker>
-
-
-
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
-            </StackLayout>
-
-        </StackLayout> -->
     </ContentPage.Content>
 </ContentPage>

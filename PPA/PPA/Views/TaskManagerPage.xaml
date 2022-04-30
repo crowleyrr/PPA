@@ -40,7 +40,7 @@
                                 FontSize="20"
                                 Padding="10,0,0,0"
                              />
-                              
+
                                 <Button Grid.Row="0" Grid.Column="1" Text="Tomorrow"
                                          Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=TomorrowTaskCommand}"		
                                 CommandParameter="{Binding .}"
@@ -105,41 +105,8 @@
                                     Style="{StaticResource DoneButton}"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=DeleteTaskCommand}"		
                                     CommandParameter="{Binding .}"></Button>
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=TaskTapped}"		
-                                CommandParameter="{Binding .}">
-                                    </TapGestureRecognizer>
-                                </Grid.GestureRecognizers>
-
-
                             </Grid>
                         </StackLayout>
-
-
-                        <!-- <StackLayout Padding="10" x:DataType="model:TaskItem">
-                                <Label Text="{Binding Name}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16"
-                                       />
-                                <Label Text="{Binding Description}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" 
-                                       />
-
-                            <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=TaskTapped}"		
-                                CommandParameter="{Binding .}">
-                                    </TapGestureRecognizer>
-                                </StackLayout.GestureRecognizers>
-
-                        </StackLayout> -->
                     </DataTemplate>
 
                 </CollectionView.ItemTemplate>
@@ -152,47 +119,4 @@
             </CollectionView>
         </RefreshView>
     </StackLayout>
-    <!--ContentPage.Content>
- 
-    
-                               
-
-
-        <StackLayout Orientation="Vertical">
-            <Button x:Name="ButtonAdd" Text="Add +" />
-            <Label Text="Today:"
-                VerticalOptions="Center" 
-                HorizontalOptions="StartAndExpand"
-                FontSize="30"
-                Padding="10,0,0,0"
-             />
-            <Label Text="Tomorrow:"
-                VerticalOptions="Center" 
-                HorizontalOptions="StartAndExpand"
-                FontSize="30"
-                Padding="10,20,0,0"
-             />
-            <Grid ColumnDefinitions="*,Auto">
-                <Label Grid.Row="0" Text="Today:"
-                VerticalOptions="Center" 
-                HorizontalOptions="StartAndExpand"
-                FontSize="30"
-                Padding="10,0,0,0"
-             />
-                <Label Grid.Row="1" Text="Item 1:"
-                VerticalOptions="Center" 
-                HorizontalOptions="StartAndExpand"
-                FontSize="30"
-                Padding="10,0,0,0"
-             />
-                <Button Grid.Row="0" Grid.Column="1" Text="Complete"/>
-                <Label Grid.Row="2" Text="Tomorrow:"
-                VerticalOptions="Center" 
-                HorizontalOptions="StartAndExpand"
-                FontSize="30"
-                Padding="10,20,0,0"
-             />
-            </Grid>
-        </StackLayout>
-    </ContentPage.Content!-->
 </ContentPage>

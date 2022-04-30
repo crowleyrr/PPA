@@ -17,6 +17,12 @@ namespace PPA.Services
         
         SQLiteAsyncConnection db;
 
+
+        /*
+         * Creates the database to hold Event objects.
+         *
+         * If database already exists, then nothing is done
+         */
         async Task Init()
         {
             if (db != null)
@@ -29,6 +35,9 @@ namespace PPA.Services
             await db.CreateTableAsync<Event>();
         }
 
+        /*
+         * Adds a new Event object to the database
+         */
         public async Task AddEventAsync(Event ev)
         {
             await Init();
@@ -37,12 +46,18 @@ namespace PPA.Services
         }
 
          
+        /*
+         * Deletes an existing Event object based on the Id
+         */
         public async Task DeleteEventAsync(Guid id)
         {
             await Init();
             await db.DeleteAsync<Event>(id);
         }
 
+        /*
+         * Returns all existing Event objects as a list
+         */
         public async Task<IEnumerable<Event>> GetEventsAsync()
         {
             await Init();
@@ -51,74 +66,6 @@ namespace PPA.Services
             return events;
         }
 
-        /*
-        public async Task<Event> GetEventAsync(int id)
-        {
-            await Init();
-            var ev = await db.Table<Event>().FirstOrDefaultAsync(c => c.Id == id);
-
-            return ev;
-        } */
         
     }
 }
-
-/*
-
-using PPA.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Event = PPA.Models.Event;
-
-namespace PPA.Services
-{
-    public class EventService
-    {
-        readonly List<Event> events;
-
-        public EventService()
-        {
-            events = new List<Event>()
-            {
-                new Event { Id = Guid.NewGuid().ToString(), EventName = "First item", EventLocation="Location 1.", EventStartTime = new DateTime(2022,3,20, 11, 30, 00), EventEndTime = new DateTime(2022, 3, 20, 12, 00, 00) },
-                new Event { Id = Guid.NewGuid().ToString(), EventName = "Second item", EventLocation="Location 2.", EventStartTime = new DateTime(2022, 3, 22, 14, 00, 00), EventEndTime = new DateTime(2022, 3, 22, 16, 00, 00) },
-            };
-        }
-
-        public async Task<bool> AddEventAsync(Event ev)
-        {
-            events.Add(ev);
-            return await Task.FromResult(true);
-        }
-
-        public async Task<bool> UpdateEventAsync(Event ev)
-        {
-            var oldEvent = events.Where((Event arg) => arg.Id == ev.Id).FirstOrDefault();
-            events.Remove(oldEvent);
-            events.Add(ev);
-
-            return await Task.FromResult(true);
-        }
-
-        public async Task<bool> DeleteEvetntAsync(string id)
-        {
-            var oldEvent = events.Where((Event arg) => arg.Id == id).FirstOrDefault();
-            events.Remove(oldEvent);
-
-            return await Task.FromResult(true);
-        }
-
-        public async Task<Event> GetEventAsync(string id)
-        {
-            return await Task.FromResult(events.FirstOrDefault(s => s.Id == id));
-        }
-
-        public async Task<IEnumerable<Event>> GetEventsAsync(bool forceRefresh = false)
-        {
-            return await Task.FromResult(events);
-        }
-    }
-}
-*/

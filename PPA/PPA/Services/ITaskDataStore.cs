@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 
 namespace PPA.Services
 {
+    /*
+     * Interface for the TaskItem database
+     */
     public interface ITaskDataStore
     {
 
         Task AddTaskAsync(TaskItem item);
         Task DeleteTaskAsync(Guid id);
-        Task<TaskItem> GetTaskAsync(Guid id);
         Task<IEnumerable<TaskItem>> GetTasksAsync();
     }
 }

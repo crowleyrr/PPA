@@ -5,13 +5,15 @@ using System.Threading.Tasks;
 
 namespace PPA.Services
 {
+
+    /*
+     * Interface for the Reminder Database
+     */
     public interface IReminderDataStore
     {
 
         Task AddReminderAsync(Reminder item);
-/*        Task UpdateReminderAsync(Reminder item);*/
         Task DeleteReminderAsync(Guid id);
-        Task<Reminder> GetReminderAsync(Guid id);
         Task<IEnumerable<Reminder>> GetRemindersAsync();
     }
 }

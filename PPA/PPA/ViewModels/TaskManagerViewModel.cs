@@ -14,17 +14,28 @@ using Command = MvvmHelpers.Commands.Command;
 
 namespace PPA.ViewModels
 {
+    /*
+     * Backend for Task Manager page
+     */
     public class TaskManagerViewModel: ViewModelBase
     {
+
+        // initialize variables
         public ObservableCollection<TaskItem> Tasks { get; }
         public ObservableCollection<TaskItem> TomorrowTasks { get; }
+
+        // initialize commands
         public AsyncCommand LoadTasksCommand { get; } 
         public AsyncCommand AddTaskCommand  { get; }
         public AsyncCommand<TaskItem> DeleteTaskCommand { get; }
-
         public AsyncCommand<TaskItem> TomorrowTaskCommand { get; }
 
+        // connect to database
         ITaskDataStore TaskService;
+
+        /*
+         * Constructor
+         */
         public TaskManagerViewModel()
         {
             Title = "Task Manager";
@@ -40,23 +51,29 @@ namespace PPA.ViewModels
 
         }
 
+        /*
+         * Loads TaskItems from database
+         * 
+         * Places loaded tasks in one of two lists
+         * based on TODAY boolean value
+         */
         async Task LoadTasks()
         {
             IsBusy = true;
 
-#if DEBUG
-            await Task.Delay(500);
-#endif 
+            // clear existing lists
             Tasks.Clear();
             TomorrowTasks.Clear();
+
             var tasks = await TaskService.GetTasksAsync();
             foreach (var task in tasks)
             {
-
+                // if Task for today and not currently in list, then add to Tasks list
                 if (task.Today && !Tasks.Contains(task))
                 {
                     Tasks.Add(task);
                 }
+                // else if not for today and not currently in list, then add to TomorrowTasks list
                 else if (!TomorrowTasks.Contains(task))
                 {
 
@@ -68,17 +85,33 @@ namespace PPA.ViewModels
         } 
 
 
+        /*
+         * Executes when 'Add' button pushed
+         * Goes to New Task Page
+         */
         private async Task OnAddTask()
         {
             await Shell.Current.GoToAsync(nameof(NewTaskPage));
         }
 
+        /*
+         * Executes when 'Delete' button pushed
+         * Removes TaskItem and reloads TaskItems
+         */
         private async Task OnDeleteTask(TaskItem task)
         {
             await TaskService.DeleteTaskAsync(task.Id);
             await LoadTasks();
         }
 
+        /*
+         * Executes when 'Tomorrow' button pushed
+         * Sets the TODAY boolean to false (Tomorrow)
+         * Reloads TaskItems
+         * 
+         * NOTE: I know deleting and adding a new object is not ideal
+         * but this is the only way I could get it to work
+         */
         private async Task MoveToTomorrow(TaskItem task)
         {
             
@@ -95,99 +128,52 @@ namespace PPA.ViewModels
             
         }
 
-        public void OnAppearing()
+        /*
+         * The below code is taken from an answer on this StackOverflow post:
+         * https://stackoverflow.com/questions/4529019/how-to-use-the-net-timer-class-to-trigger-an-event-at-a-specific-time
+         *  The idea is to check if it is midnight and if it is, then move any tasks for Tomorrow back to Today because it
+         *  is a new day
+         */
+        bool _ran = false; //initial setting at start up
+        private async void timer_Tick(object sender, EventArgs e)
         {
-            IsBusy = true;
-        }
 
-    }
-}
-
-/*
- * 
- * using PPA.Models;
-using PPA.Views;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-
-namespace PPA.ViewModels
-{
-    public class TaskManagerViewModel: BaseViewModel
-    {
-        private TaskItem _selectedTask;
-
-        public ObservableCollection<TaskItem> Tasks { get; }
-        public Command LoadTasksCommand { get; }
-        public Command AddTaskCommand  { get; }
-        public Command<TaskItem> TaskTapped { get; }
-
-        public TaskManagerViewModel()
-        {
-            Tasks = new ObservableCollection<TaskItem>();
-            LoadTasksCommand = new Command(async () => await ExecuteLoadTasksCommand());
-            TaskTapped = new Command<TaskItem>(OnTaskSelected);
-            AddTaskCommand = new Command(OnAddTask);
-
-        }
-
-        async Task ExecuteLoadTasksCommand()
-        {
-            IsBusy = true;
-
-            try
+            if (DateTime.Now.Hour == 0 && _ran == false)
             {
-                Tasks.Clear();
-                var tasks = await DataStore.GetTasksAsync(true);
+                _ran = true;
+                var tasks = await TaskService.GetTasksAsync();
                 foreach (var task in tasks)
                 {
-                    Tasks.Add(task);
+                    if (!task.Today)
+                    {
+                        TaskItem newTask = new TaskItem()
+                        {
+                            Name = task.Name,
+                            Description = task.Description,
+                            Today = true,
+                        };
+
+                        await TaskService.AddTaskAsync(newTask);
+                        await OnDeleteTask(task);
+                    }
                 }
-            } catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
+
             }
-            finally
+
+            if (DateTime.Now.Hour != 7 && _ran == true)
             {
-                IsBusy = false;
+                _ran = false;
             }
+
         }
 
+        /*
+         * method for when page loads
+         */
         public void OnAppearing()
         {
             IsBusy = true;
-            _selectedTask = null;
-        }
-
-        public TaskItem SelectedTask
-        {
-            get => _selectedTask;
-            set
-            {
-                SetProperty(ref _selectedTask, value);
-                OnTaskSelected(value);
-            }
-        }
-
-        private async void OnAddTask(object obj)
-        {
-            await Shell.Current.GoToAsync(nameof(NewTaskPage));
-        }
-
-        async void OnTaskSelected(TaskItem task)
-        {
-            if(task == null)
-                return;
-
-            await Shell.Current.GoToAsync($"{nameof(TaskDetailPage)}?{nameof(TaskDetailViewModel.TaskId)}={task.Id}");
-            
         }
 
     }
 }
-
-*/

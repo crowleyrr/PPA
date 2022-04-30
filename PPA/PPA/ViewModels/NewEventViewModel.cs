@@ -11,16 +11,18 @@ using Xamarin.Forms;
 
 namespace PPA.ViewModels
 {
+    /*
+     * Backend to add a new Event
+     */
     public class NewEventViewModel : ViewModelBase
     {
        
+        // variables needed
         private string title;
         private string description;
         private DateTime datetime;
         private DateTime date;
         private TimeSpan time;
-
-
 
         public string EventTitle { get => title; set => SetProperty(ref title, value); }
         public string EventDescription { get => description; set => SetProperty(ref description, value); }
@@ -29,11 +31,16 @@ namespace PPA.ViewModels
         public TimeSpan EventTime { get => time; set => SetProperty(ref time, value); }
   
 
-
+        // commands to add or cancel a new event
         public AsyncCommand SaveCommand { get; }
         public AsyncCommand CancelCommand { get; }
+
+        // Connect to the Event database 
         IEventDataStore EventService;
 
+        /*
+         * NewEventViewModel constructor
+         */
         public NewEventViewModel()
         {
             SaveCommand = new AsyncCommand(OnSave);
@@ -42,6 +49,12 @@ namespace PPA.ViewModels
              
         }
 
+        /*
+         * Verifies potential new Event
+         * Adds new Event to database if valid
+         * Creates notifications for Event at time-of and 30 minutes before
+         * Returns to Event Manager page once complete
+         */
         async Task OnSave()
         {
             if(String.IsNullOrWhiteSpace(title)
@@ -58,29 +71,35 @@ namespace PPA.ViewModels
                 DateTime = EventDate.Date.Add(EventTime),
             };
 
+            // create notification for time-of
             await NotificationCenter.Current.Show((notification) => notification
            .WithScheduleOptions((schedule) => schedule
-                   .NotifyAt(EventDate.Date.Add(EventTime)) // Used for Scheduling local notification, if not specified notification will show immediately.
+                   .NotifyAt(EventDate.Date.Add(EventTime))
                    .Build())
                        .WithTitle("Happening now: " + EventTitle)
                        .WithDescription(EventDescription)
-                       .WithReturningData("Dummy Data") // Returning data when tapped on notification.
                        .WithNotificationId(100)
                        .Create());
 
+            // create notification for 30 minutes before event
             await NotificationCenter.Current.Show((notification) => notification
           .WithScheduleOptions((schedule) => schedule
-                  .NotifyAt(EventDate.Date.Add(EventTime).AddMinutes(-30)) // Used for Scheduling local notification, if not specified notification will show immediately.
+                  .NotifyAt(EventDate.Date.Add(EventTime).AddMinutes(-30))
                   .Build())
                       .WithTitle("Happening soon: " + EventTitle + " at " + EventDate.Date.Add(EventTime))
                       .WithDescription(EventDescription)
-                      .WithReturningData("Dummy Data") // Returning data when tapped on notification.
+                     // .WithReturningData("Dummy Data")
                       .WithNotificationId(100)
                       .Create());
+
+            //Add to database and then return to Event Manager page
             await EventService.AddEventAsync(ev);
             await Shell.Current.GoToAsync("..");
         }
 
+        /*
+         * If cancel button is pressed, then return to Event Manager page
+         */
         async Task OnCancel()
         {
             await Shell.Current.GoToAsync("..");
@@ -90,86 +109,3 @@ namespace PPA.ViewModels
 
     }
 }
-
-/*
- * using PPA.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
-
-namespace PPA.ViewModels
-{
-    public class NewEventViewModel : BaseViewModel
-    {
-        private string name;
-        private string location;
-        private DateTime startTime;
-        private DateTime endTime;
-        public NewEventViewModel()
-        {
-            SaveCommand = new Command(OnSave, ValidateSave);
-            CancelCommand = new Command(OnCancel);
-            this.PropertyChanged +=
-                (_, __) => SaveCommand.ChangeCanExecute();
-        }
-
-        private bool ValidateSave()
-        {
-            return !String.IsNullOrWhiteSpace(name)
-                && !String.IsNullOrWhiteSpace(location)
-                && !String.IsNullOrWhiteSpace(startTime.ToString())
-                && !String.IsNullOrWhiteSpace(endTime.ToString());
-        }
-
-        public string EventName
-        {
-            get => name;
-            set => SetProperty(ref name, value);
-        }
-
-        public string EventLocation
-        {
-            get => location;
-            set => SetProperty(ref location, value);
-        }
-
-        public DateTime EventStartTime
-        {
-              get => startTime;
-            set => SetProperty(ref startTime, value);
-        }
-
-        public DateTime EventEndTime
-        {
-            get => endTime;
-            set => SetProperty(ref endTime, value);
-        }
-
-        public Command SaveCommand { get; }
-        public Command CancelCommand { get; }
-
-        private async void OnCancel()
-        {
-            await Shell.Current.GoToAsync("..");
-        }
-
-        private async void OnSave()
-        {
-            Event newEvent = new Event()
-            {
-                Id = Guid.NewGuid().ToString(),
-                EventName = EventName,
-                EventLocation = EventLocation,
-                EventStartTime = EventStartTime,
-                EventEndTime = EventEndTime,
-            };
-
-            await DataStore.AddEventAsync(newEvent);
-            await Shell.Current.GoToAsync("..");
-        }
-    }
-}
-*/

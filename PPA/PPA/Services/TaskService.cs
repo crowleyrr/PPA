@@ -15,6 +15,11 @@ namespace PPA.Services
     {
         SQLiteAsyncConnection db;
 
+        /*
+         * Creates the database to hold TaskItem objects.
+         *
+         * If database already exists, then nothing is done
+         */
         async Task Init()
         {
             if (db != null)
@@ -27,6 +32,9 @@ namespace PPA.Services
             await db.CreateTableAsync<TaskItem>();
         }
 
+        /*
+         * Adds a new TaskItem to the database
+         */
         public async Task AddTaskAsync(TaskItem task)
         {
             await Init();
@@ -34,19 +42,18 @@ namespace PPA.Services
             var id = await db.InsertAsync(task);
         }
 
-        /* do later 
-        public async Task UpdateTaskAsync(TaskItem task)
-        {
-           
-        }
-        */
-
+        /*
+         * Deletes an existing TaskItem from the database
+         */
         public async Task DeleteTaskAsync(Guid id)
         {
             await Init();
             await db.DeleteAsync<TaskItem>(id);
         }
 
+        /*
+         * Returns all existing TaskItems as a list
+         */
         public async Task<IEnumerable<TaskItem>> GetTasksAsync()
         {
             await Init();
@@ -54,75 +61,5 @@ namespace PPA.Services
             var tasks = await db.Table<TaskItem>().ToListAsync();
             return tasks;
         }
-
-        public async Task<TaskItem> GetTaskAsync(Guid id)
-        {
-            await Init();
-            var task = await db.Table<TaskItem>().FirstOrDefaultAsync(c => c.Id == id);
-
-            return task;
-        }
     }
 }
-
-/*
- * 
- * OLD DB STUFF
-using PPA.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TaskItem = PPA.Models.TaskItem;
-
-namespace PPA.Services
-{
-    public class TaskService
-    {
-    readonly List<TaskItem> tasks;
-
-        public TaskService()
-        {
-            tasks = new List<TaskItem>()
-            {
-                new TaskItem { Id = Guid.NewGuid().ToString(), Name = "First item", Description="This is an item description." },
-                new TaskItem { Id = Guid.NewGuid().ToString(), Name = "Second item", Description="This is an item description." },
-            };
-        }
-
-        public async Task<bool> AddTaskAsync(TaskItem task)
-    {
-            tasks.Add(task);
-            return await Task.FromResult(true);
-    }
-
-    public async Task<bool> UpdateTaskAsync(TaskItem task)
-        {
-            var oldTask = tasks.Where((TaskItem arg) => arg.Id == task.Id).FirstOrDefault();
-            tasks.Remove(oldTask);
-            tasks.Add(task);
-
-            return await Task.FromResult(true);
-        }
-
-    public async Task<bool> DeleteTaskAsync(string id)
-        {
-            var oldTask = tasks.Where((TaskItem arg) => arg.Id == id).FirstOrDefault();
-            tasks.Remove(oldTask);
-
-            return await Task.FromResult(true);
-        }
-
-    public async Task<TaskItem> GetTaskAsync(string id)
-        {
-            return await Task.FromResult(tasks.FirstOrDefault(s => s.Id == id));
-        }
-
-    public async Task<IEnumerable<TaskItem>> GetTasksAsync(bool forceRefresh = false)
-        {
-            return await Task.FromResult(tasks);
-        }
-    }
-}
-
-*/

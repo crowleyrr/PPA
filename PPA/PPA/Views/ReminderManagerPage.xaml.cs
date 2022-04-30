@@ -15,9 +15,14 @@ namespace PPA.Views
     public partial class ReminderManagerPage : ContentPage
     {
         ReminderManagerViewModel _viewModel;
+
+        /*
+         * corresponding file for .xaml frontend of Reminder manager
+         */
         public ReminderManagerPage()
         {
             InitializeComponent();
+            // initialize context for page
                 BindingContext = _viewModel = new ReminderManagerViewModel();
         }
 
