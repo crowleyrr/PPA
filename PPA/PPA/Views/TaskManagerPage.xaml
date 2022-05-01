@@ -12,10 +12,21 @@
         <ResourceDictionary>
             <Style x:Key="DoneButton" TargetType="Button">
                 <Setter Property="BorderColor" Value="Transparent" />
-                <Setter Property="BorderWidth" Value="10" />
-                <Setter Property="BorderRadius" Value="2" />
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="BackgroundColor" Value="Blue" />
+                <Setter Property="Margin" Value="3,0,5,0" />
+            </Style>
+            <Style x:Key="TomorrowButton" TargetType="Button">
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="RoyalBlue" />
+                <Setter Property="Margin" Value="10,0,-3,0" />
+            </Style>
+            <Style x:Key="TomDoneButton" TargetType="Button">
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="Blue" />
+                <Setter Property="Margin" Value="60,0,5,0" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -42,6 +53,7 @@
                              />
 
                                 <Button Grid.Row="0" Grid.Column="1" Text="Tomorrow"
+                                        Style="{StaticResource TomorrowButton}"
                                          Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=TomorrowTaskCommand}"		
                                 CommandParameter="{Binding .}"
                                         />
@@ -93,6 +105,8 @@
                                 FontSize="20"
                                 Padding="10,0,0,0"
                              />
+                                <Label 
+                                    Grid.Row="0" Grid.Column="1"/>
                                 <Label Grid.Row="1" Text="{Binding Description}"
                                 VerticalOptions="Center" 
                                 HorizontalOptions="StartAndExpand"
@@ -100,9 +114,9 @@
                                 Padding="30,0,0,10"
                              />
                                 <Button Grid.Row="0" 
-                                    Grid.Column="1" 
+                                    Grid.Column="2" 
                                     Text="Done" 
-                                    Style="{StaticResource DoneButton}"
+                                    Style="{StaticResource TomDoneButton}"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskManagerViewModel}}, Path=DeleteTaskCommand}"		
                                     CommandParameter="{Binding .}"></Button>
                             </Grid>

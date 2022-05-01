@@ -7,6 +7,22 @@
     <ContentPage.BindingContext>
         <viewmodels:NewReminderViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="SaveButton" TargetType="Button">
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="Blue" />
+                <Setter Property="Margin" Value="3,0,5,0" />
+            </Style>
+            <Style x:Key="CancelButton" TargetType="Button">
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="RoyalBlue" />
+                <Setter Property="Margin" Value="10,0,-3,0" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
             <StackLayout
             Spacing="8"
@@ -58,8 +74,8 @@
                 Format="hh:mm tt"
                 HorizontalOptions="FillAndExpand" />
                 <StackLayout Orientation="Horizontal">
-                    <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
-                    <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+                    <Button Text="Cancel" Style="{StaticResource CancelButton}" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                    <Button Text="Save" Style="{StaticResource SaveButton}" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
                 </StackLayout>
             </StackLayout>
     </ContentPage.Content>
