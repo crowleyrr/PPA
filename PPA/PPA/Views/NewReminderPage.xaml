@@ -12,14 +12,18 @@
             <Style x:Key="SaveButton" TargetType="Button">
                 <Setter Property="BorderColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="White" />
-                <Setter Property="BackgroundColor" Value="Blue" />
+                <Setter Property="BackgroundColor" Value="#2A9DF4" />
                 <Setter Property="Margin" Value="3,0,5,0" />
+                <Setter Property="FontSize" Value="Large" />
+
             </Style>
             <Style x:Key="CancelButton" TargetType="Button">
                 <Setter Property="BorderColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="White" />
-                <Setter Property="BackgroundColor" Value="RoyalBlue" />
+                <Setter Property="BackgroundColor" Value="#187BCD" />
                 <Setter Property="Margin" Value="10,0,-3,0" />
+                <Setter Property="FontSize" Value="Large" />
+
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -30,47 +34,47 @@
             Orientation="Vertical">
                 <Label
                 Margin="0,10,0,0"
-                Text="Reminder"
-                TextColor="Gray"
-                FontSize="14"
+                Text="Remind me:"
+                TextColor="#03254C"
+                FontSize="Large"
                 HorizontalTextAlignment="Start"
                 VerticalTextAlignment="Center" />
                 <Entry
                 x:Name="title"
                 Text="{Binding ReminderName, Mode=TwoWay}"
-                TextColor="Black"
-                FontSize="16"
+                TextColor="#03254C"
+                FontSize="Medium"
                 HeightRequest="40"
                 ReturnType="Next"
                 HorizontalOptions="FillAndExpand" />
 
                 <Label
-                Text="Date"
-                TextColor="Gray"
-                FontSize="14"
+                Text="Date:"
+                TextColor="#03254C"
+                FontSize="Large"
                 HorizontalTextAlignment="Start"
                 VerticalTextAlignment="Center" />
                 <DatePicker
                 x:Name="datePicker"
                 Date="{Binding ReminderDate}"
                 HeightRequest="40"
-                FontSize="16"
-                TextColor="Black"
+                FontSize="Medium"
+                TextColor="#03254C"
                 Format="dd MMM yyyy"
                 HorizontalOptions="FillAndExpand" />
                 <Label
                 Margin="0,10,0,0"
-                Text="Time"
-                TextColor="Gray"
-                FontSize="14"
+                Text="Time:"
+                TextColor="#03254C"
+                FontSize="Large"
                 HorizontalTextAlignment="Start"
                 VerticalTextAlignment="Center" />
                 <TimePicker
                 x:Name="timePicker"
                 Time="{Binding ReminderTime}"
                 HeightRequest="40"
-                FontSize="16"
-                TextColor="Black"
+                FontSize="Medium"
+                TextColor="#03254C"
                 Format="hh:mm tt"
                 HorizontalOptions="FillAndExpand" />
                 <StackLayout Orientation="Horizontal">

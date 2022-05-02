@@ -6,7 +6,7 @@
         Define global resources and styles here, that apply to all pages in your app.
     -->
     <Application.Resources>
-        <Color x:Key="Primary">Blue</Color>
+        <Color x:Key="Primary">#1167B1</Color>
            
             <Color x:Key="PrimaryColor">#2070FF</Color>
             <Color x:Key="TertiaryColor">#A0A0FF</Color>
@@ -24,9 +24,9 @@
             <x:Double x:Key="MediumFontSize">16</x:Double>
             <x:Double x:Key="LargeFontSize">18</x:Double>
 
-            <Color x:Key="CalendarPrimaryColor">#E00000</Color>
+        <Color x:Key="CalendarPrimaryColor">#187BCD</Color>
             <Color x:Key="CalendarBackgroundColor">White</Color>
-            <Color x:Key="CalendarTertiaryColor">#FFA0A0</Color>
+        <Color x:Key="CalendarTertiaryColor">#187BCD</Color>
             <Color x:Key="CalendarPrimaryTextColor">White</Color>
             <Color x:Key="CalendarBackgroundTextColor">Black</Color>
 

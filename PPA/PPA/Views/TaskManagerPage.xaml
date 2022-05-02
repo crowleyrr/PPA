@@ -3,29 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PPA.Views.TaskManagerPage"
              xmlns:local="clr-namespace:PPA.ViewModels" xmlns:model="clr-namespace:PPA.Models" x:DataType="local:TaskManagerViewModel"
-             BackgroundColor="White">
+             BackgroundColor="White"
+                 Title="Pocket Personal Assistant"
+>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Command="{Binding AddTaskCommand}" />
+        <ToolbarItem Text="Add" 
+                     Command="{Binding AddTaskCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="DoneButton" TargetType="Button">
                 <Setter Property="BorderColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="White" />
-                <Setter Property="BackgroundColor" Value="Blue" />
+                <Setter Property="BackgroundColor" Value="#2A9DF4" />
                 <Setter Property="Margin" Value="3,0,5,0" />
             </Style>
             <Style x:Key="TomorrowButton" TargetType="Button">
                 <Setter Property="BorderColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="White" />
-                <Setter Property="BackgroundColor" Value="RoyalBlue" />
+                <Setter Property="BackgroundColor" Value="#187BCD" />
                 <Setter Property="Margin" Value="10,0,-3,0" />
             </Style>
             <Style x:Key="TomDoneButton" TargetType="Button">
                 <Setter Property="BorderColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="White" />
-                <Setter Property="BackgroundColor" Value="Blue" />
+                <Setter Property="BackgroundColor" Value="#2A9DF4" />
                 <Setter Property="Margin" Value="60,0,5,0" />
             </Style>
         </ResourceDictionary>
@@ -33,8 +36,9 @@
     <StackLayout>
         <Label Text="Today"
                FontSize="30"
-               Padding="10"></Label>
-        <BoxView HeightRequest="1.5" Color="Gray"/>
+               Padding="10,10,0,0"
+               TextColor="#03254C"></Label>
+        <BoxView HeightRequest="1.5" Color="#03254C"/>
 
         <RefreshView x:DataType="local:TaskManagerViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <CollectionView x:Name="TasksListView"
@@ -49,6 +53,7 @@
                                 VerticalOptions="Center" 
                                 HorizontalOptions="StartAndExpand"
                                 FontSize="20"
+                                       TextColor="#03254C"
                                 Padding="10,0,0,0"
                              />
 
@@ -67,9 +72,10 @@
                                 VerticalOptions="Center" 
                                 HorizontalOptions="StartAndExpand"
                                 FontSize="15"
+                                   TextColor="#03254C"
                                 Padding="30,0,0,10"
                              />
-                            <BoxView HeightRequest="0.5" Color="Gray"/>
+                            <BoxView HeightRequest="0.5" Color="#03254C"/>
 
 
                         </StackLayout>
@@ -79,6 +85,7 @@
                 <CollectionView.EmptyView>
                     <Label Text="No tasks for today."
                            FontSize="25"
+                           TextColor="#03254C"
                            Padding="80,40,10,10"
                            ></Label>
                 </CollectionView.EmptyView>
@@ -88,8 +95,9 @@
         </RefreshView>
         <Label Text="Tomorrow"
                FontSize="30"
-               Padding="10"></Label>
-        <BoxView HeightRequest="1" Color="Gray"/>
+               Padding="10,10,0,0"
+               TextColor="#03254C"></Label>
+        <BoxView HeightRequest="1.5" Color="#03254C"/>
 
         <RefreshView x:DataType="local:TaskManagerViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <CollectionView x:Name="TomorrowTasksListView"
@@ -103,6 +111,7 @@
                                 VerticalOptions="Center" 
                                 HorizontalOptions="StartAndExpand"
                                 FontSize="20"
+                                       TextColor="#03254C"
                                 Padding="10,0,0,0"
                              />
                                 <Label 
@@ -111,6 +120,7 @@
                                 VerticalOptions="Center" 
                                 HorizontalOptions="StartAndExpand"
                                 FontSize="15"
+                                       TextColor="#03254C"
                                 Padding="30,0,0,10"
                              />
                                 <Button Grid.Row="0" 

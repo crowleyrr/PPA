@@ -13,23 +13,26 @@
             <Style x:Key="SaveButton" TargetType="Button">
                 <Setter Property="BorderColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="White" />
-                <Setter Property="BackgroundColor" Value="Blue" />
+                <Setter Property="BackgroundColor" Value="#2A9DF4" />
                 <Setter Property="Margin" Value="3,0,5,0" />
+                <Setter Property="FontSize" Value="Large" />
             </Style>
             <Style x:Key="CancelButton" TargetType="Button">
                 <Setter Property="BorderColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="White" />
-                <Setter Property="BackgroundColor" Value="RoyalBlue" />
+                <Setter Property="BackgroundColor" Value="#187BCD" />
                 <Setter Property="Margin" Value="10,0,-3,0" />
+                <Setter Property="FontSize" Value="Large" />
+
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="15">
-            <Label Text="Name" FontSize="Medium" />
-            <Entry Text="{Binding Name, Mode=TwoWay}" FontSize="Medium" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+            <Label Text="Name" FontSize="Large" TextColor="#03254C"/>
+            <Entry Text="{Binding Name, Mode=TwoWay}" TextColor="#03254C" FontSize="Medium" />
+            <Label Text="Description" FontSize="Large" TextColor="#03254C" Padding="0,10,0,0"/>
+            <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" TextColor="#03254C"/>
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Style="{StaticResource CancelButton}" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Style="{StaticResource SaveButton}" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
