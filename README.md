@@ -58,6 +58,12 @@ The developer additionally relied upon the Xamarin.Forms docs distributed by Mic
 
 # Steps to use this project
 
+1. Install Visual Studio 2022.
+2. Choose the option to clone a GitHub repo.  If you are having difficulties doing this, you can refer to external documentation here: https://docs.microsoft.com/en-us/visualstudio/version-control/git-clone-repository?view=vs-2022
+3. Once you have cloned the repository and have it open in Visual Studio, set up the emulator to run the application on a mobile device.  To do this, ensure that at the top of Visual Studios you have selected the following: Debug, Any CPU, PPA.Android.  From here you can select the dropdown to the right of these fields to create a new Android emulator if you do not already have one.
+4. Once you have your emulator, click on the emulator to launch it.  This will bring up the application on the device.
+5. If any errors occur when launching the emulator, you can quit the emulator and launch it again.  If further complications arise, please contact the developer.
+
 # Developer Information
 Rachel Crowley is a second-year graduate student at Central Michigan University pursuing a master's in Computer Science.  Her main focus within Computer Science is
 development - both web and software.
